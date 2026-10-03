@@ -34,6 +34,7 @@ export const loginLimiter = rateLimit({
 export const registerLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   limit: 5,
+  skipFailedRequests: true,
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   handler: buildRateLimitHandler('Too many accounts created from this IP, please try again after an hour')

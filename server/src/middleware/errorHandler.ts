@@ -10,7 +10,11 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   if (err instanceof ZodError) {
     const errors: Record<string, string[]> = {};
     for (const issue of err.issues) {
-      const field = issue.path.join('.') || 'body';
+      const path =
+        issue.path[0] === 'body' || issue.path[0] === 'query' || issue.path[0] === 'params'
+          ? issue.path.slice(1)
+          : issue.path;
+      const field = path.join('.') || 'body';
       if (!errors[field]) {
         errors[field] = [];
       }
