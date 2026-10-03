@@ -1,6 +1,7 @@
 import { createApp } from './app.js';
 import { env } from './config/env.js';
 import { logger } from './utils/logger.js';
+import { prisma } from './db/prisma.js';
 
 const app = createApp();
 
@@ -10,8 +11,9 @@ const server = app.listen(env.PORT, () => {
 
 const handleShutdown = (signal: string) => {
   logger.info({ signal }, 'Shutting down gracefully');
-  server.close(() => {
+  server.close(async () => {
     logger.info('HTTP server closed');
+    await prisma.$disconnect();
     process.exit(0);
   });
 };

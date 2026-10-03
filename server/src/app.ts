@@ -10,6 +10,7 @@ import { globalLimiter } from './middleware/rateLimiters.js';
 import { notFound } from './middleware/notFound.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { HttpError } from './utils/httpError.js';
+import { prisma } from './db/prisma.js';
 
 export const createApp = (): Express => {
   const app = express();
@@ -67,8 +68,13 @@ export const createApp = (): Express => {
     res.json({ status: 'ok' });
   });
 
-  app.get('/api/ready', async (_req, res) => {
-    res.json({ status: 'ok' });
+  app.get('/api/ready', async (_req, res, next) => {
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+      res.json({ status: 'ok' });
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.use(notFound);

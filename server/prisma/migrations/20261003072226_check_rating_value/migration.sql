@@ -1,0 +1,1 @@
+ALTER TABLE "Rating" ADD CONSTRAINT "rating_value_check" CHECK (value BETWEEN 1 AND 5);
