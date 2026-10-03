@@ -11,6 +11,7 @@ import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import VerifyEmail from './pages/VerifyEmail';
+import Profile from './pages/Profile';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -57,7 +58,7 @@ export default function App() {
 
               <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
                 <Route path="/stores" element={<PagePlaceholder title="Stores" />} />
-                <Route path="/profile" element={<PagePlaceholder title="Profile" />} />
+                <Route path="/profile" element={<Profile />} />
 
                 <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
                   <Route path="/admin" element={<PagePlaceholder title="Admin dashboard" />} />
