@@ -12,6 +12,10 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import VerifyEmail from './pages/VerifyEmail';
 import Profile from './pages/Profile';
+import AdminDashboard from './pages/admin/Dashboard';
+import AdminUsers from './pages/admin/Users';
+import AdminUserDetails from './pages/admin/UserDetails';
+import AdminStores from './pages/admin/Stores';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,10 +65,10 @@ export default function App() {
                 <Route path="/profile" element={<Profile />} />
 
                 <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
-                  <Route path="/admin" element={<PagePlaceholder title="Admin dashboard" />} />
-                  <Route path="/admin/users" element={<PagePlaceholder title="User management" />} />
-                  <Route path="/admin/users/:id" element={<PagePlaceholder title="User details" />} />
-                  <Route path="/admin/stores" element={<PagePlaceholder title="Store management" />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/admin/users" element={<AdminUsers />} />
+                  <Route path="/admin/users/:id" element={<AdminUserDetails />} />
+                  <Route path="/admin/stores" element={<AdminStores />} />
                 </Route>
 
                 <Route element={<ProtectedRoute allowedRoles={['STORE_OWNER']} />}>
