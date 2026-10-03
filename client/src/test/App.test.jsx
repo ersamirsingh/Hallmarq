@@ -3,8 +3,9 @@ import { describe, it, expect } from 'vitest';
 import App from '../App';
 
 describe('App', () => {
-  it('renders without crashing and displays route content', () => {
+  it('renders without crashing and displays route content', async () => {
     render(<App />);
-    expect(screen.getByText('Sign in')).toBeInTheDocument();
+    const heading = await screen.findByRole('heading', { name: /sign in/i });
+    expect(heading).toBeInTheDocument();
   });
 });

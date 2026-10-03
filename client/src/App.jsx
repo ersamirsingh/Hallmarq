@@ -6,6 +6,12 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import AppShell from './components/layout/AppShell';
 
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import VerifyEmail from './pages/VerifyEmail';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -17,7 +23,8 @@ const queryClient = new QueryClient({
 });
 
 function HomeRedirect() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) return null;
   if (!user) return <Navigate to="/login" replace />;
   if (user.role === 'ADMIN') return <Navigate to="/admin" replace />;
   if (user.role === 'STORE_OWNER') return <Navigate to="/owner" replace />;
@@ -42,11 +49,11 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomeRedirect />} />
 
-              <Route path="/login" element={<PagePlaceholder title="Sign in" />} />
-              <Route path="/signup" element={<PagePlaceholder title="Create account" />} />
-              <Route path="/forgot-password" element={<PagePlaceholder title="Forgot password" />} />
-              <Route path="/reset-password" element={<PagePlaceholder title="Reset password" />} />
-              <Route path="/verify-email" element={<PagePlaceholder title="Verify email" />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
 
               <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
                 <Route path="/stores" element={<PagePlaceholder title="Stores" />} />
