@@ -52,9 +52,15 @@ export const authEmailAccountLimiter = rateLimit({
   limit: 3,
   standardHeaders: 'draft-7',
   legacyHeaders: false,
+  skip: (req: Request): boolean => {
+    const hasBodyEmail = typeof req.body?.email === 'string' && req.body.email.trim().length > 0;
+    const hasUserEmail = typeof (req as Request & { user?: { email?: string } }).user?.email === 'string';
+    return !hasBodyEmail && !hasUserEmail;
+  },
   keyGenerator: (req: Request): string => {
-    const email = typeof req.body?.email === 'string' ? req.body.email.toLowerCase().trim() : '';
-    return email || req.ip || 'unknown';
+    const emailFromBody = typeof req.body?.email === 'string' ? req.body.email.toLowerCase().trim() : '';
+    const emailFromUser = (req as Request & { user?: { email: string } }).user?.email;
+    return emailFromBody || emailFromUser || 'unknown';
   },
   handler: buildRateLimitHandler('Too many attempts for this email, please try again after an hour')
 });
