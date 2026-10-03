@@ -17,6 +17,7 @@ import AdminUsers from './pages/admin/Users';
 import AdminUserDetails from './pages/admin/UserDetails';
 import AdminStores from './pages/admin/Stores';
 import Stores from './pages/user/Stores';
+import OwnerDashboard from './pages/owner/Dashboard';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -73,7 +74,7 @@ export default function App() {
                 </Route>
 
                 <Route element={<ProtectedRoute allowedRoles={['STORE_OWNER']} />}>
-                  <Route path="/owner" element={<PagePlaceholder title="Owner dashboard" />} />
+                  <Route path="/owner" element={<OwnerDashboard />} />
                 </Route>
               </Route>
 
