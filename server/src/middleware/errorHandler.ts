@@ -27,6 +27,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   if (err instanceof HttpError) {
     res.status(err.statusCode).json({
       message: err.message,
+      ...(err.code ? { code: err.code } : {}),
       ...(err.errors ? { errors: err.errors } : {}),
       requestId
     });
