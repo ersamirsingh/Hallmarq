@@ -17,6 +17,8 @@ import { categoryRouter } from './routes/category.routes.js';
 import { storeRouter } from './routes/store.routes.js';
 import { ownerRouter } from './routes/owner.routes.js';
 import { profileRouter } from './routes/profile.routes.js';
+import swaggerUi from 'swagger-ui-express';
+import { getOpenApiDocumentation } from './docs/openapi.js';
 
 export const createApp = (): Express => {
   const app = express();
@@ -89,6 +91,26 @@ export const createApp = (): Express => {
   app.use('/api/stores', storeRouter);
   app.use('/api/owner', ownerRouter);
   app.use('/api/profile', profileRouter);
+
+  if (env.ENABLE_DOCS) {
+    const docs = getOpenApiDocumentation();
+    app.get('/api/docs.json', (_req, res) => {
+      res.json(docs);
+    });
+
+    app.use(
+      '/api/docs',
+      (_req: express.Request, res: express.Response, next: express.NextFunction) => {
+        res.setHeader(
+          'Content-Security-Policy',
+          "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+        );
+        next();
+      },
+      swaggerUi.serve,
+      swaggerUi.setup(docs)
+    );
+  }
 
   app.use(notFound);
   app.use(errorHandler);
