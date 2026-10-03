@@ -76,8 +76,8 @@ export default function Signup() {
               <Input
                 label="Full name"
                 required
-                placeholder="Between 20 and 60 characters"
-                helperText="Must be between 20 and 60 characters"
+                placeholder="Between 3 and 60 characters"
+                helperText="Must be between 3 and 60 characters"
                 error={errors.name?.message}
                 {...register('name')}
               />

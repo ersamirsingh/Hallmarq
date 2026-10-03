@@ -48,7 +48,7 @@ npx prisma migrate dev --name init
 npm run seed
 npm run dev
 ```
-The server will start on `http://localhost:4000`.
+The server will start on `http://localhost:5000`.
 
 ### 4. Client Setup
 In a new terminal:
@@ -58,7 +58,7 @@ cp .env.example .env
 npm install
 npm run dev
 ```
-The client will start on `http://localhost:3000` (or `http://localhost:5173`).
+The client will start on `http://localhost:5173`.
 
 ---
 
@@ -69,8 +69,8 @@ Run the entire platform with a single command:
 docker compose up --build
 ```
 
-- **Web Application:** `http://localhost:3000`
-- **Backend API & Swagger Docs:** `http://localhost:4000/api/docs`
+- **Web Application:** `http://localhost:5173`
+- **Backend API & Swagger Docs:** `http://localhost:5000/api/docs`
 - **Mailpit Web Interface:** `http://localhost:8025`
 
 ---
@@ -99,12 +99,12 @@ npm test
 
 | Variable | Description | Default |
 |---|---|---|
-| `PORT` | Server listening port | `4000` |
+| `PORT` | Server listening port | `5000` |
 | `NODE_ENV` | Environment mode (`development`, `test`, `production`) | `development` |
 | `DATABASE_URL` | PostgreSQL connection URI | - |
 | `DATABASE_URL_TEST` | Separate PostgreSQL connection URI for testing | - |
 | `JWT_SECRET` | Secret key for JWT signing (minimum 32 characters) | - |
-| `CLIENT_URL` | Comma-separated allowed CORS origins | `http://localhost:3000` |
+| `CLIENT_URL` | Comma-separated allowed CORS origins | `http://localhost:5173` |
 | `TRUST_PROXY` | Number of reverse proxies in front of Express | `0` |
 | `BCRYPT_COST` | Number of bcrypt salt rounds | `12` |
 | `SMTP_HOST` | Outgoing SMTP mail server | `localhost` |
@@ -119,4 +119,4 @@ npm test
 ## API Documentation
 
 Interactive OpenAPI 3.0 documentation generated dynamically from Zod schemas is available at:
-`http://localhost:4000/api/docs` (Swagger UI) or `http://localhost:4000/api/docs.json` (raw OpenAPI specification).
+`http://localhost:5000/api/docs` (Swagger UI) or `http://localhost:5000/api/docs.json` (raw OpenAPI specification).

@@ -18,13 +18,13 @@ describe('Validation rules', () => {
     storeId = store.id;
   });
 
-  it('rejects name with 19 characters (too short)', async () => {
+  it('rejects name with 2 characters (too short)', async () => {
     const res = await request(app)
       .post('/api/auth/register')
       .set('X-Requested-With', 'XMLHttpRequest')
       .send({
-        name: 'a'.repeat(19),
-        email: 'val19@rateit.com',
+        name: 'aa',
+        email: 'val2@rateit.com',
         address: '123 Main Street',
         password: 'Password@123'
       });

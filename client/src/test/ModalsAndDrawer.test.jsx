@@ -31,7 +31,7 @@ describe('Modals and Drawers', () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(screen.getByText(/name must be at least 20 characters/i)).toBeInTheDocument();
+      expect(screen.getByText(/name must be at least 3 characters/i)).toBeInTheDocument();
       expect(screen.getByText(/please enter a valid email address/i)).toBeInTheDocument();
     });
   });

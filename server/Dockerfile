@@ -18,5 +18,5 @@ RUN npm ci --omit=dev
 RUN npx prisma generate
 COPY --from=builder /app/dist ./dist
 USER nodejs
-EXPOSE 4000
+EXPOSE 5000
 CMD ["node", "dist/index.js"]

@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const nameSchema = z
   .string({ required_error: 'Name is required' })
   .trim()
-  .min(20, 'Name must be between 20 and 60 characters')
-  .max(60, 'Name must be between 20 and 60 characters');
+  .min(3, 'Name must be between 3 and 60 characters')
+  .max(60, 'Name must be between 3 and 60 characters');
 
 export const addressSchema = z
   .string({ required_error: 'Address is required' })

@@ -9,7 +9,7 @@ import { Input, Textarea, Button, Card, CardHeader, CardTitle, CardDescription, 
 import { toast } from 'sonner';
 
 const profileInfoSchema = z.object({
-  name: z.string().min(20, 'Name must be at least 20 characters').max(60, 'Name must not exceed 60 characters'),
+  name: z.string().min(3, 'Name must be at least 3 characters').max(60, 'Name must not exceed 60 characters'),
   email: z.string().email('Please enter a valid email address'),
   address: z.string().max(400, 'Address must not exceed 400 characters').optional().default('')
 });
@@ -63,7 +63,7 @@ export default function ProfileInfoForm() {
           <Input
             label="Full name"
             required
-            helperText="Must be between 20 and 60 characters"
+            helperText="Must be between 3 and 60 characters"
             error={errors.name?.message}
             {...register('name')}
           />

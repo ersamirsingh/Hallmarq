@@ -40,12 +40,12 @@ describe('Auth Pages', () => {
     const passwordInput = container.querySelector('input[name="password"]');
     const submitButton = screen.getByRole('button', { name: /create account/i });
 
-    fireEvent.change(nameInput, { target: { value: 'Short Name' } });
+    fireEvent.change(nameInput, { target: { value: 'Al' } });
     fireEvent.change(passwordInput, { target: { value: 'simple' } });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/name must be at least 20 characters/i)).toBeInTheDocument();
+      expect(screen.getByText(/name must be at least 3 characters/i)).toBeInTheDocument();
       expect(screen.getByText(/password must be between 8 and 16 characters/i)).toBeInTheDocument();
     });
   });
