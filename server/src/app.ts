@@ -16,6 +16,7 @@ import { adminRouter } from './routes/admin.routes.js';
 import { categoryRouter } from './routes/category.routes.js';
 import { storeRouter } from './routes/store.routes.js';
 import { ownerRouter } from './routes/owner.routes.js';
+import { profileRouter } from './routes/profile.routes.js';
 
 export const createApp = (): Express => {
   const app = express();
@@ -87,6 +88,7 @@ export const createApp = (): Express => {
   app.use('/api/categories', categoryRouter);
   app.use('/api/stores', storeRouter);
   app.use('/api/owner', ownerRouter);
+  app.use('/api/profile', profileRouter);
 
   app.use(notFound);
   app.use(errorHandler);
