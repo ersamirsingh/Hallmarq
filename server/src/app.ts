@@ -12,6 +12,8 @@ import { errorHandler } from './middleware/errorHandler.js';
 import { HttpError } from './utils/httpError.js';
 import { prisma } from './db/prisma.js';
 import { authRouter } from './routes/auth.routes.js';
+import { adminRouter } from './routes/admin.routes.js';
+import { categoryRouter } from './routes/category.routes.js';
 
 export const createApp = (): Express => {
   const app = express();
@@ -79,6 +81,8 @@ export const createApp = (): Express => {
   });
 
   app.use('/api/auth', authRouter);
+  app.use('/api/admin', adminRouter);
+  app.use('/api/categories', categoryRouter);
 
   app.use(notFound);
   app.use(errorHandler);
