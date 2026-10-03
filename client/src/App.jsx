@@ -16,6 +16,7 @@ import AdminDashboard from './pages/admin/Dashboard';
 import AdminUsers from './pages/admin/Users';
 import AdminUserDetails from './pages/admin/UserDetails';
 import AdminStores from './pages/admin/Stores';
+import Stores from './pages/user/Stores';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,7 +62,7 @@ export default function App() {
               <Route path="/verify-email" element={<VerifyEmail />} />
 
               <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
-                <Route path="/stores" element={<PagePlaceholder title="Stores" />} />
+                <Route path="/stores" element={<Stores />} />
                 <Route path="/profile" element={<Profile />} />
 
                 <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
