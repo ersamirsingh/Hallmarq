@@ -35,8 +35,8 @@ export default function Users() {
     setSortOrder(order);
   };
 
-  const users = data?.users || [];
-  const pagination = data?.pagination;
+  const users = data?.users || data?.data || [];
+  const pagination = data?.pagination || data?.meta;
 
   return (
     <div className="space-y-6">

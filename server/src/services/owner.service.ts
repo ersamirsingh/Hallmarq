@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { prisma } from '../db/prisma.js';
+import { HttpError } from '../utils/httpError.js';
 import { parsePagination } from '../utils/pagination.js';
 import { parseSort } from '../utils/sort.js';
 
@@ -84,26 +85,67 @@ export const getOwnerDashboard = async (ownerId: number, query: Record<string, u
   ]);
 
   const raters = ratersData.map((r) => ({
+    id: r.id,
     name: r.user.name,
     email: r.user.email,
+    user: {
+      name: r.user.name,
+      email: r.user.email
+    },
     value: r.value,
     comment: r.comment,
+    createdAt: r.createdAt,
     ratedAt: r.createdAt
   }));
+
+  const distributionObj: Record<number, number> = {};
+  for (const d of distribution) {
+    distributionObj[d.stars] = d.count;
+  }
+
+  const meta = pagination.buildMeta(total);
 
   return {
     store: {
       id: store.id,
       name: store.name,
+      email: store.email,
       address: store.address,
-      category: store.category
+      category: store.category,
+      rating: {
+        average: averageRating ? averageRating.toFixed(1) : '0.0',
+        count: ratingCount,
+        distribution: distributionObj
+      },
+      raters,
+      pagination: meta
     },
-    averageRating,
+    averageRating: averageRating ? averageRating.toFixed(1) : '0.0',
     ratingCount,
-    distribution,
+    distribution: distributionObj,
     raters: {
       data: raters,
-      meta: pagination.buildMeta(total)
+      meta
     }
   };
+};
+
+export const updateOwnerStoreName = async (ownerId: number, newName: string) => {
+  const store = await prisma.store.findUnique({
+    where: { ownerId }
+  });
+
+  if (!store) {
+    throw new HttpError(404, 'No store associated with your account');
+  }
+
+  const updated = await prisma.store.update({
+    where: { id: store.id },
+    data: { name: newName.trim() },
+    include: {
+      category: { select: { id: true, name: true, slug: true } }
+    }
+  });
+
+  return { store: updated };
 };

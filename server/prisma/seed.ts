@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, TokenType } from '@prisma/client';
 
 const prisma = new PrismaClient();
 const BCRYPT_COST = 10;
@@ -224,6 +224,26 @@ async function seedRatings(users: Array<{ id: number }>, stores: Array<{ id: num
   }
 }
 
+async function seedAuthTokens(users: Array<{ id: number }>) {
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  await prisma.authToken.create({
+    data: {
+      userId: users[0].id,
+      type: TokenType.EMAIL_VERIFY,
+      tokenHash: 'seeded_verify_token_hash_user_1',
+      expiresAt
+    }
+  });
+  await prisma.authToken.create({
+    data: {
+      userId: users[1].id,
+      type: TokenType.PASSWORD_RESET,
+      tokenHash: 'seeded_reset_token_hash_user_2',
+      expiresAt
+    }
+  });
+}
+
 async function main() {
   process.stdout.write('Resetting database...\n');
   await cleanDatabase();
@@ -239,6 +259,9 @@ async function main() {
 
   process.stdout.write('Seeding ratings with comments and varied dates...\n');
   await seedRatings(users, stores);
+
+  process.stdout.write('Seeding auth tokens for verification and reset testing...\n');
+  await seedAuthTokens(users);
 
   process.stdout.write('Database reset and seed complete!\n');
 }

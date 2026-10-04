@@ -18,3 +18,11 @@ export const createStoreSchema = z.object({
     })
     .strict()
 });
+
+export const updateStoreNameSchema = z.object({
+  body: z
+    .object({
+      name: storeNameSchema
+    })
+    .strict()
+});

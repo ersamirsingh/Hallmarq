@@ -43,9 +43,9 @@ export default function Stores() {
     setSortOrder(order);
   };
 
-  const stores = data?.stores || [];
-  const pagination = data?.pagination;
-  const categories = catData?.categories || [];
+  const stores = data?.stores || data?.data || [];
+  const pagination = data?.pagination || data?.meta;
+  const categories = catData?.categories || catData?.data || [];
 
   return (
     <div className="space-y-6">
@@ -147,9 +147,17 @@ export default function Stores() {
                       <div className="flex items-center gap-1.5">
                         <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
                         <span className="font-semibold text-slate-900 dark:text-white">
-                          {s.rating?.average || '0.0'}
+                          {typeof s.rating === 'object' && s.rating !== null
+                            ? s.rating.average ?? '0.0'
+                            : s.rating ?? '0.0'}
                         </span>
-                        <span className="text-xs text-slate-400">({s.rating?.count || 0})</span>
+                        <span className="text-xs text-slate-400">
+                          (
+                          {typeof s.rating === 'object' && s.rating !== null
+                            ? s.rating.count ?? 0
+                            : s.ratingCount ?? 0}
+                          )
+                        </span>
                       </div>
                     </td>
                     <td className="px-4 py-3.5 text-slate-600 dark:text-slate-400">

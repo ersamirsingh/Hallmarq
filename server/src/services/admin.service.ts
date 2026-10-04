@@ -8,10 +8,55 @@ import { parseSort } from '../utils/sort.js';
 import { env } from '../config/env.js';
 
 export const getAdminStats = async () => {
-  const [totalUsers, totalStores, totalRatings] = await Promise.all([
+  const [
+    totalUsers,
+    totalStores,
+    totalRatings,
+    usersByRole,
+    ratingDistribution,
+    categories,
+    ratingAgg,
+    recentRatings
+  ] = await Promise.all([
     prisma.user.count(),
     prisma.store.count(),
-    prisma.rating.count()
+    prisma.rating.count(),
+    prisma.user.groupBy({
+      by: ['role'],
+      _count: { id: true }
+    }),
+    prisma.rating.groupBy({
+      by: ['value'],
+      _count: { id: true }
+    }),
+    prisma.category.findMany({
+      select: {
+        id: true,
+        name: true,
+        _count: {
+          select: { stores: true }
+        }
+      }
+    }),
+    prisma.rating.aggregate({
+      _avg: { value: true }
+    }),
+    prisma.rating.findMany({
+      take: 10,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        value: true,
+        comment: true,
+        createdAt: true,
+        user: {
+          select: { id: true, name: true, email: true }
+        },
+        store: {
+          select: { id: true, name: true }
+        }
+      }
+    })
   ]);
 
   const fourteenDaysAgo = new Date();
@@ -49,11 +94,47 @@ export const getAdminStats = async () => {
     count
   }));
 
+  const distMap = new Map<number, number>(ratingDistribution.map((r) => [r.value, r._count.id]));
+  const ratingBreakdown = [5, 4, 3, 2, 1].map((stars) => {
+    const count = distMap.get(stars) || 0;
+    const percentage = totalRatings > 0 ? Math.round((count / totalRatings) * 100) : 0;
+    return {
+      stars: `${stars} ★`,
+      rating: stars,
+      count,
+      percentage
+    };
+  });
+
+  const roleMap = new Map<string, number>(usersByRole.map((u) => [u.role, u._count.id]));
+  const userBreakdown = {
+    USER: roleMap.get('USER') || 0,
+    OWNER: roleMap.get('OWNER') || 0,
+    ADMIN: roleMap.get('ADMIN') || 0
+  };
+
+  const categoryBreakdown = categories
+    .map((c) => ({
+      id: c.id,
+      name: c.name,
+      storesCount: c._count.stores
+    }))
+    .filter((c) => c.storesCount > 0);
+
+  const averageRating = ratingAgg._avg.value ? Math.round(ratingAgg._avg.value * 10) / 10 : 0;
+
   return {
     totalUsers,
     totalStores,
     totalRatings,
-    ratingsPerDay
+    averageRating,
+    ratingBreakdown,
+    ratingDistribution: ratingBreakdown,
+    userBreakdown,
+    categoryBreakdown,
+    recentRatings,
+    ratingsPerDay,
+    dailyRatings: ratingsPerDay
   };
 };
 
@@ -68,9 +149,10 @@ export const getAdminUsers = async (query: Record<string, unknown>) => {
     createdAt: 'createdAt'
   } as const;
 
+  const rawOrder = query.order ?? query.sortOrder;
   const { sortBy, order } = parseSort(
     query.sortBy,
-    query.order,
+    rawOrder,
     allowedSortFields,
     'createdAt',
     'desc'
@@ -78,17 +160,28 @@ export const getAdminUsers = async (query: Record<string, unknown>) => {
 
   const where: Prisma.UserWhereInput = {};
 
-  if (typeof query.name === 'string' && query.name.trim()) {
-    where.name = { contains: escapeLike(query.name.trim()), mode: 'insensitive' };
+  if (typeof query.search === 'string' && query.search.trim()) {
+    const term = escapeLike(query.search.trim());
+    where.OR = [
+      { name: { contains: term, mode: 'insensitive' } },
+      { email: { contains: term, mode: 'insensitive' } },
+      { address: { contains: term, mode: 'insensitive' } }
+    ];
+  } else {
+    if (typeof query.name === 'string' && query.name.trim()) {
+      where.name = { contains: escapeLike(query.name.trim()), mode: 'insensitive' };
+    }
+    if (typeof query.email === 'string' && query.email.trim()) {
+      where.email = { contains: escapeLike(query.email.trim()), mode: 'insensitive' };
+    }
+    if (typeof query.address === 'string' && query.address.trim()) {
+      where.address = { contains: escapeLike(query.address.trim()), mode: 'insensitive' };
+    }
   }
-  if (typeof query.email === 'string' && query.email.trim()) {
-    where.email = { contains: escapeLike(query.email.trim()), mode: 'insensitive' };
-  }
-  if (typeof query.address === 'string' && query.address.trim()) {
-    where.address = { contains: escapeLike(query.address.trim()), mode: 'insensitive' };
-  }
-  if (typeof query.role === 'string' && ['ADMIN', 'USER', 'OWNER'].includes(query.role.trim().toUpperCase())) {
-    where.role = query.role.trim().toUpperCase() as Role;
+
+  if (typeof query.role === 'string' && ['ADMIN', 'USER', 'OWNER', 'STORE_OWNER'].includes(query.role.trim().toUpperCase())) {
+    const roleValue = query.role.trim().toUpperCase() === 'STORE_OWNER' ? 'OWNER' : query.role.trim().toUpperCase();
+    where.role = roleValue as Role;
   }
 
   const [users, total] = await Promise.all([
@@ -110,9 +203,12 @@ export const getAdminUsers = async (query: Record<string, unknown>) => {
     prisma.user.count({ where })
   ]);
 
+  const meta = pagination.buildMeta(total);
   return {
+    users,
     data: users,
-    meta: pagination.buildMeta(total)
+    pagination: meta,
+    meta
   };
 };
 
@@ -216,9 +312,10 @@ export const getAdminStores = async (query: Record<string, unknown>) => {
     rating: 'rating'
   } as const;
 
+  const rawOrder = query.order ?? query.sortOrder;
   const { sortBy, order } = parseSort(
     query.sortBy,
-    query.order,
+    rawOrder,
     allowedSortFields,
     'name',
     'asc'
@@ -226,19 +323,42 @@ export const getAdminStores = async (query: Record<string, unknown>) => {
 
   const where: Prisma.StoreWhereInput = {};
 
-  if (typeof query.name === 'string' && query.name.trim()) {
-    where.name = { contains: escapeLike(query.name.trim()), mode: 'insensitive' };
+  if (typeof query.search === 'string' && query.search.trim()) {
+    const term = escapeLike(query.search.trim());
+    where.OR = [
+      { name: { contains: term, mode: 'insensitive' } },
+      { email: { contains: term, mode: 'insensitive' } },
+      { address: { contains: term, mode: 'insensitive' } }
+    ];
+  } else {
+    if (typeof query.name === 'string' && query.name.trim()) {
+      where.name = { contains: escapeLike(query.name.trim()), mode: 'insensitive' };
+    }
+    if (typeof query.email === 'string' && query.email.trim()) {
+      where.email = { contains: escapeLike(query.email.trim()), mode: 'insensitive' };
+    }
+    if (typeof query.address === 'string' && query.address.trim()) {
+      where.address = { contains: escapeLike(query.address.trim()), mode: 'insensitive' };
+    }
   }
-  if (typeof query.email === 'string' && query.email.trim()) {
-    where.email = { contains: escapeLike(query.email.trim()), mode: 'insensitive' };
-  }
-  if (typeof query.address === 'string' && query.address.trim()) {
-    where.address = { contains: escapeLike(query.address.trim()), mode: 'insensitive' };
-  }
+
   if (query.categoryId !== undefined && query.categoryId !== null && query.categoryId !== '') {
     const catId = Number(query.categoryId);
-    if (!Number.isNaN(catId)) {
+    if (!Number.isNaN(catId) && catId > 0) {
       where.categoryId = catId;
+    }
+  } else if (query.category !== undefined && query.category !== null && query.category !== '') {
+    const catStr = String(query.category).trim();
+    const catIdNum = Number(catStr);
+    if (!Number.isNaN(catIdNum) && catIdNum > 0) {
+      where.categoryId = catIdNum;
+    } else {
+      where.category = {
+        OR: [
+          { name: { equals: catStr, mode: 'insensitive' } },
+          { slug: { equals: catStr.toLowerCase(), mode: 'insensitive' } }
+        ]
+      };
     }
   }
 
@@ -268,14 +388,18 @@ export const getAdminStores = async (query: Record<string, unknown>) => {
         address: s.address,
         category: s.category,
         owner: s.owner,
-        rating,
+        rating: {
+          average: rating,
+          count
+        },
+        ratingValue: rating,
         ratingCount: count
       };
     });
 
     formatted.sort((a, b) => {
-      const rA = a.rating ?? -1;
-      const rB = b.rating ?? -1;
+      const rA = a.ratingValue ?? -1;
+      const rB = b.ratingValue ?? -1;
       if (rA !== rB) {
         return order === 'asc' ? rA - rB : rB - rA;
       }
@@ -318,15 +442,22 @@ export const getAdminStores = async (query: Record<string, unknown>) => {
         address: s.address,
         category: s.category,
         owner: s.owner,
-        rating,
+        rating: {
+          average: rating,
+          count: ratingCount
+        },
+        ratingValue: rating,
         ratingCount
       };
     });
   }
 
+  const meta = pagination.buildMeta(total);
   return {
+    stores,
     data: stores,
-    meta: pagination.buildMeta(total)
+    pagination: meta,
+    meta
   };
 };
 
@@ -403,4 +534,29 @@ export const getAvailableOwners = async () => {
     },
     orderBy: { name: 'asc' }
   });
+};
+
+export const getAdminRatings = async (query: Record<string, unknown>) => {
+  const pagination = parsePagination(query.page, query.limit);
+
+  const [ratings, total] = await Promise.all([
+    prisma.rating.findMany({
+      skip: pagination.skip,
+      take: pagination.take,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        store: { select: { id: true, name: true } }
+      }
+    }),
+    prisma.rating.count()
+  ]);
+
+  const meta = pagination.buildMeta(total);
+  return {
+    ratings,
+    data: ratings,
+    pagination: meta,
+    meta
+  };
 };

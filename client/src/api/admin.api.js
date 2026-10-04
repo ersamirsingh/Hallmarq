@@ -28,6 +28,10 @@ export const adminApi = {
   createStore: async (payload) => {
     const response = await apiClient.post('/admin/stores', payload);
     return response.data;
+  },
+  getRatings: async (params = {}) => {
+    const response = await apiClient.get('/admin/ratings', { params });
+    return response.data;
   }
 };
 

@@ -15,4 +15,9 @@ profileRouter.use(auth);
 
 profileRouter.get('/', handleGetProfile);
 profileRouter.put('/', userWritesLimiter, validate(updateProfileSchema), handleUpdateProfile);
+profileRouter.patch('/', userWritesLimiter, validate(updateProfileSchema), handleUpdateProfile);
+
 profileRouter.put('/password', userWritesLimiter, validate(changePasswordSchema), handleChangePassword);
+profileRouter.post('/password', userWritesLimiter, validate(changePasswordSchema), handleChangePassword);
+profileRouter.post('/change-password', userWritesLimiter, validate(changePasswordSchema), handleChangePassword);
+profileRouter.put('/change-password', userWritesLimiter, validate(changePasswordSchema), handleChangePassword);

@@ -3,27 +3,14 @@ import { prisma } from '../db/prisma.js';
 import { HttpError } from '../utils/httpError.js';
 import { escapeLike } from '../utils/escapeLike.js';
 import { parsePagination } from '../utils/pagination.js';
-import { parseSort } from '../utils/sort.js';
 import { calculateWeightedRating } from '../utils/rating.js';
 import { env } from '../config/env.js';
 
 export const getUserStores = async (userId: number, query: Record<string, unknown>) => {
   const pagination = parsePagination(query.page, query.limit);
 
-  const allowedSortFields = {
-    name: 'name',
-    address: 'address',
-    rating: 'rating',
-    top: 'top'
-  } as const;
-
-  const { sortBy, order } = parseSort(
-    query.sortBy,
-    query.order,
-    allowedSortFields,
-    'name',
-    query.sortBy === 'rating' || query.sortBy === 'top' ? 'desc' : 'asc'
-  );
+  const rawSort = String(query.sort || query.sortBy || 'all').toLowerCase();
+  const sortMode = ['top', 'newest', 'rating', 'name', 'all'].includes(rawSort) ? rawSort : 'all';
 
   const where: Prisma.StoreWhereInput = {};
 
@@ -35,14 +22,22 @@ export const getUserStores = async (userId: number, query: Record<string, unknow
     ];
   }
 
-  if (query.categoryId !== undefined && query.categoryId !== null && query.categoryId !== '') {
-    const catId = Number(query.categoryId);
-    if (!Number.isNaN(catId)) {
+  const catParam = String(query.category || query.categoryId || '').trim();
+  if (catParam) {
+    const catId = Number(catParam);
+    if (!Number.isNaN(catId) && catId > 0) {
       where.categoryId = catId;
+    } else {
+      where.category = {
+        OR: [
+          { name: { equals: catParam, mode: 'insensitive' } },
+          { slug: { equals: catParam.toLowerCase(), mode: 'insensitive' } }
+        ]
+      };
     }
   }
 
-  if (sortBy === 'rating' || sortBy === 'top') {
+  if (sortMode === 'rating' || sortMode === 'top') {
     const [allStores, globalAgg] = await Promise.all([
       prisma.store.findMany({
         where,
@@ -51,7 +46,7 @@ export const getUserStores = async (userId: number, query: Record<string, unknow
           ratings: { select: { userId: true, value: true, comment: true } }
         }
       }),
-      sortBy === 'top' ? prisma.rating.aggregate({ _avg: { value: true } }) : null
+      sortMode === 'top' ? prisma.rating.aggregate({ _avg: { value: true } }) : null
     ]);
 
     const globalAvg = globalAgg?._avg?.value || 0;
@@ -62,7 +57,7 @@ export const getUserStores = async (userId: number, query: Record<string, unknow
       const avg = count > 0 ? sum / count : 0;
       const overallRating = count > 0 ? Math.round(avg * 10) / 10 : null;
       const myRatingObj = s.ratings.find((r) => r.userId === userId);
-      const sortScore = sortBy === 'top' ? calculateWeightedRating(count, avg, globalAvg) : avg;
+      const sortScore = sortMode === 'top' ? calculateWeightedRating(count, avg, globalAvg) : avg;
 
       return {
         id: s.id,
@@ -79,19 +74,31 @@ export const getUserStores = async (userId: number, query: Record<string, unknow
 
     formatted.sort((a, b) => {
       if (a.sortScore !== b.sortScore) {
-        return order === 'asc' ? a.sortScore - b.sortScore : b.sortScore - a.sortScore;
+        return b.sortScore - a.sortScore;
       }
-      return order === 'asc' ? a.id - b.id : b.id - a.id;
+      return a.id - b.id;
     });
 
     const paginated = formatted
       .slice(pagination.skip, pagination.skip + pagination.take)
       .map(({ sortScore: _, ...rest }) => rest);
 
+    const meta = pagination.buildMeta(allStores.length);
     return {
+      stores: paginated,
       data: paginated,
-      meta: pagination.buildMeta(allStores.length)
+      pagination: meta,
+      meta
     };
+  }
+
+  let orderBy: Prisma.StoreOrderByWithRelationInput[] = [{ id: 'asc' }];
+  if (sortMode === 'newest') {
+    orderBy = [{ createdAt: 'desc' }, { id: 'desc' }];
+  } else if (sortMode === 'name') {
+    orderBy = [{ name: 'asc' }, { id: 'asc' }];
+  } else {
+    orderBy = [{ id: 'asc' }];
   }
 
   const [stores, total] = await Promise.all([
@@ -99,7 +106,7 @@ export const getUserStores = async (userId: number, query: Record<string, unknow
       where,
       skip: pagination.skip,
       take: pagination.take,
-      orderBy: [{ [sortBy]: order }, { id: 'asc' }],
+      orderBy,
       include: {
         category: { select: { id: true, name: true, slug: true } },
         ratings: { select: { userId: true, value: true, comment: true } }
@@ -126,9 +133,12 @@ export const getUserStores = async (userId: number, query: Record<string, unknow
     };
   });
 
+  const meta = pagination.buildMeta(total);
   return {
+    stores: data,
     data,
-    meta: pagination.buildMeta(total)
+    pagination: meta,
+    meta
   };
 };
 
@@ -247,8 +257,11 @@ export const getStoreReviews = async (storeId: number, query: Record<string, unk
     createdAt: r.createdAt
   }));
 
+  const meta = pagination.buildMeta(total);
   return {
+    reviews: data,
     data,
-    meta: pagination.buildMeta(total)
+    pagination: meta,
+    meta
   };
 };

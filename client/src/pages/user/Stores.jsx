@@ -37,9 +37,9 @@ export default function Stores() {
       })
   });
 
-  const stores = data?.stores || [];
-  const pagination = data?.pagination;
-  const categories = catData?.categories || [];
+  const stores = data?.stores || data?.data || [];
+  const pagination = data?.pagination || data?.meta;
+  const categories = catData?.categories || catData?.data || [];
 
   return (
     <div className="space-y-6">
@@ -73,12 +73,11 @@ export default function Stores() {
               setPage(1);
             }}
             options={[
-              { value: 'top', label: 'Top rated (weighted)' },
-              { value: 'most_ratings', label: 'Most ratings' },
+              { value: 'all', label: 'All stores' },
+              { value: 'top', label: 'Top rated' },
               { value: 'highest', label: 'Highest rated' },
-              { value: 'lowest', label: 'Lowest rated' },
-              { value: 'name', label: 'Name (A-Z)' },
-              { value: 'newest', label: 'Newest' }
+              { value: 'newest', label: 'Newest first' },
+              { value: 'name', label: 'Name (A–Z)' }
             ]}
           />
         </div>

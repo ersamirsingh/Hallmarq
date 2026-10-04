@@ -11,7 +11,7 @@ const addUserSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters').max(60, 'Name must not exceed 60 characters'),
   email: z.string().email('Please enter a valid email address'),
   password: passwordSchema,
-  address: z.string().max(400, 'Address must not exceed 400 characters').optional().default(''),
+  address: z.string().min(1, 'Address is required').max(400, 'Address must not exceed 400 characters'),
   role: z.enum(['ADMIN', 'USER', 'STORE_OWNER', 'OWNER'])
 });
 
@@ -38,7 +38,7 @@ export default function AddUserModal({ isOpen, onClose, onSuccess }) {
       await adminApi.createUser(payload);
       toast.success('User created successfully.');
       reset();
-      onSuccess();
+      onSuccess?.();
       onClose();
     } catch (err) {
       setServerError(err.response?.data?.message || 'Failed to create user.');
@@ -94,6 +94,7 @@ export default function AddUserModal({ isOpen, onClose, onSuccess }) {
 
         <Textarea
           label="Address"
+          required
           rows={3}
           maxLength={400}
           placeholder="User physical address"

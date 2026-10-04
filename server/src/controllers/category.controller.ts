@@ -4,7 +4,7 @@ import { getAllCategories, createCategory } from '../services/category.service.j
 export const getCategories = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const categories = await getAllCategories();
-    res.json({ data: categories });
+    res.json({ categories, data: categories });
   } catch (err) {
     next(err);
   }

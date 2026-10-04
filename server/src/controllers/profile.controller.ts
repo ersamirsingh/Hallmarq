@@ -14,7 +14,7 @@ export const handleGetProfile = async (req: Request, res: Response, next: NextFu
 export const handleUpdateProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const user = await updateProfile(req.user!.id, req.body);
-    res.json({ user });
+    res.json({ user, message: 'Profile updated successfully' });
   } catch (err) {
     next(err);
   }
@@ -28,7 +28,7 @@ export const handleChangePassword = async (req: Request, res: Response, next: Ne
       req.body.newPassword
     );
     setAuthCookie(res, freshToken);
-    res.json({ message: 'Password changed successfully' });
+    res.json({ message: 'Password changed successfully', token: freshToken });
   } catch (err) {
     next(err);
   }

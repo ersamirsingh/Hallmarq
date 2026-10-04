@@ -6,25 +6,16 @@ import {
   getAdminUserDetails,
   getAdminStores,
   createAdminStore,
-  getAvailableOwners
+  getAvailableOwners,
+  getAdminRatings
 } from '../services/admin.service.js';
 
 export const getStats = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const stats = await getAdminStats();
     res.json({
-      stats: {
-        totalUsers: stats.totalUsers,
-        totalStores: stats.totalStores,
-        totalRatings: stats.totalRatings,
-        dailyRatings: stats.ratingsPerDay,
-        ratingsPerDay: stats.ratingsPerDay
-      },
-      totalUsers: stats.totalUsers,
-      totalStores: stats.totalStores,
-      totalRatings: stats.totalRatings,
-      dailyRatings: stats.ratingsPerDay,
-      ratingsPerDay: stats.ratingsPerDay
+      stats,
+      ...stats
     });
   } catch (err) {
     next(err);
@@ -80,7 +71,16 @@ export const postStore = async (req: Request, res: Response, next: NextFunction)
 export const getAvailableOwnersList = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const owners = await getAvailableOwners();
-    res.json({ data: owners });
+    res.json({ owners, data: owners });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getRatingsList = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const result = await getAdminRatings(req.query);
+    res.json(result);
   } catch (err) {
     next(err);
   }

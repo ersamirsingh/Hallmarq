@@ -7,7 +7,8 @@ import {
   getUserById,
   getStoresList,
   postStore,
-  getAvailableOwnersList
+  getAvailableOwnersList,
+  getRatingsList
 } from '../controllers/admin.controller.js';
 import { handleCreateCategory } from '../controllers/category.controller.js';
 import { auth } from '../middleware/auth.js';
@@ -29,4 +30,6 @@ adminRouter.get('/users/:id', getUserById);
 adminRouter.get('/stores', getStoresList);
 adminRouter.post('/stores', adminCreateLimiter, validate(createStoreSchema), postStore);
 adminRouter.get('/owners/available', getAvailableOwnersList);
+adminRouter.get('/available-owners', getAvailableOwnersList);
+adminRouter.get('/ratings', getRatingsList);
 adminRouter.post('/categories', adminCreateLimiter, validate(createCategorySchema), handleCreateCategory);

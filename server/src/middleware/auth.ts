@@ -5,7 +5,9 @@ import { prisma } from '../db/prisma.js';
 
 export const auth = async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
   try {
-    const token = req.cookies?.[AUTH_COOKIE_NAME];
+    const authHeader = req.headers?.authorization;
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+    const token = req.cookies?.[AUTH_COOKIE_NAME] || bearerToken;
     if (!token) {
       throw new HttpError(401, 'Authentication required');
     }

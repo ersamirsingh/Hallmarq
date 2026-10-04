@@ -34,8 +34,8 @@ export default function AddStoreModal({ isOpen, onClose, onSuccess }) {
     if (!isOpen) return;
     Promise.all([categoryApi.getCategories(), adminApi.getAvailableOwners()])
       .then(([catRes, ownerRes]) => {
-        setCategories(catRes.categories || []);
-        setOwners(ownerRes.owners || []);
+        setCategories(catRes.categories || catRes.data || []);
+        setOwners(ownerRes.owners || ownerRes.data || []);
       })
       .catch(() => {});
   }, [isOpen]);
@@ -53,7 +53,7 @@ export default function AddStoreModal({ isOpen, onClose, onSuccess }) {
       await adminApi.createStore(payload);
       toast.success('Store created successfully.');
       reset();
-      onSuccess();
+      onSuccess?.();
       onClose();
     } catch (err) {
       setServerError(err.response?.data?.message || 'Failed to create store.');
