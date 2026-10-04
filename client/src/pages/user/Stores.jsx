@@ -44,10 +44,10 @@ export default function Stores() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
           Explore stores
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
+        <p className="text-sm text-slate-500 dark:text-[#9A9A9A]">
           Discover verified local businesses and share your rating experience
         </p>
       </div>

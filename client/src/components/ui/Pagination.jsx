@@ -11,9 +11,9 @@ export function Pagination({
 
   return (
     <div className={`flex items-center justify-between gap-4 py-3.5 ${className}`}>
-      <p className="text-xs text-slate-500 dark:text-slate-400">
-        Page <span className="font-semibold text-slate-900 dark:text-slate-100">{page}</span> of{' '}
-        <span className="font-semibold text-slate-900 dark:text-slate-100">{totalPages}</span>
+      <p className="text-xs text-slate-500 dark:text-[#9A9A9A]">
+        Page <span className="font-semibold text-slate-900 dark:text-[#FFFFFF]">{page}</span> of{' '}
+        <span className="font-semibold text-slate-900 dark:text-[#FFFFFF]">{totalPages}</span>
       </p>
       <div className="flex items-center gap-2">
         <Button

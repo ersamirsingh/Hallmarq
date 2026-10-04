@@ -22,21 +22,21 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title={`Reviews: ${store.name}`} width="max-w-lg">
       <div className="space-y-6">
-        <div className="rounded-2xl border border-slate-200/90 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Average store rating</span>
+        <div className="rounded-2xl border border-slate-200/90 bg-slate-50/80 p-4 dark:border-[#262626] dark:bg-[#151515]">
+          <span className="text-xs font-semibold text-slate-500 dark:text-[#9A9A9A]">Average store rating</span>
           <div className="mt-1 flex items-center gap-3">
             <StarRating value={Number(store.rating?.average) || 0} size="md" />
-            <span className="text-lg font-bold text-slate-900 dark:text-white">
+            <span className="text-lg font-bold text-slate-900 dark:text-[#FFFFFF]">
               {store.rating?.average || '0.0'}
             </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">
+            <span className="text-xs text-slate-500 dark:text-[#9A9A9A]">
               ({store.rating?.count || 0} customer reviews)
             </span>
           </div>
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
             Customer feedback
           </h3>
 
@@ -57,24 +57,24 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
               {reviews.map((rev) => (
                 <div
                   key={rev.id}
-                  className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/90"
+                  className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-[#262626] dark:bg-[#0F0F0F]"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-slate-900 dark:text-white">
+                    <span className="text-sm font-semibold text-slate-900 dark:text-[#FFFFFF]">
                       {rev.user?.name || 'Verified Customer'}
                     </span>
-                    <span className="text-[11px] text-slate-400">
+                    <span className="text-[11px] text-slate-400 dark:text-[#9A9A9A]">
                       {new Date(rev.createdAt).toLocaleDateString()}
                     </span>
                   </div>
                   <div className="mt-1.5 flex items-center gap-2">
                     <StarRating value={rev.value} size="sm" />
-                    <span className="text-xs font-bold text-amber-500">
+                    <span className="text-xs font-bold text-amber-500 dark:text-[#FF7A3D]">
                       {rev.value} / 5
                     </span>
                   </div>
                   {rev.comment && (
-                    <p className="mt-2.5 text-xs text-slate-600 leading-relaxed dark:text-slate-300">
+                    <p className="mt-2.5 text-xs text-slate-600 leading-relaxed dark:text-[#9A9A9A]">
                       "{rev.comment}"
                     </p>
                   )}
@@ -85,7 +85,7 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
         </div>
 
         {pagination && pagination.totalPages > 1 && (
-          <div className="border-t border-slate-100 pt-3 dark:border-slate-800">
+          <div className="border-t border-slate-100 pt-3 dark:border-[#262626]">
             <Pagination
               page={pagination.page}
               totalPages={pagination.totalPages}

@@ -42,10 +42,10 @@ export default function Users() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
             User management
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-[#9A9A9A]">
             View, filter, sort, and register accounts
           </p>
         </div>
@@ -87,7 +87,7 @@ export default function Users() {
       <Card>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50">
+            <thead className="border-b border-slate-200 bg-slate-50/50 dark:border-[#262626] dark:bg-[#151515]">
               <tr>
                 <SortableTh field="name" sortField={sortBy} sortOrder={sortOrder} onSort={handleSort}>
                   Name
@@ -101,12 +101,12 @@ export default function Users() {
                 <SortableTh field="role" sortField={sortBy} sortOrder={sortOrder} onSort={handleSort}>
                   Role
                 </SortableTh>
-                <th className="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-600 dark:text-slate-300">
+                <th className="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-600 dark:text-[#9A9A9A]">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-100 dark:divide-[#262626]">
               {isLoading ? (
                 <tr>
                   <td colSpan={5} className="p-6">
@@ -126,10 +126,10 @@ export default function Users() {
                 </tr>
               ) : (
                 users.map((u) => (
-                  <tr key={u.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
-                    <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{u.name}</td>
-                    <td className="px-4 py-3.5 text-slate-600 dark:text-slate-400">{u.email}</td>
-                    <td className="px-4 py-3.5 text-slate-500 dark:text-slate-400 truncate max-w-xs">{u.address || '—'}</td>
+                  <tr key={u.id} className="hover:bg-slate-50/50 dark:hover:bg-[#151515]">
+                    <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-[#FFFFFF]">{u.name}</td>
+                    <td className="px-4 py-3.5 text-slate-600 dark:text-[#9A9A9A]">{u.email}</td>
+                    <td className="px-4 py-3.5 text-slate-500 dark:text-[#9A9A9A] truncate max-w-xs">{u.address || '—'}</td>
                     <td className="px-4 py-3.5">
                       <Badge variant={u.role === 'ADMIN' ? 'danger' : u.role === 'OWNER' || u.role === 'STORE_OWNER' ? 'warning' : 'default'} size="sm">
                         {u.role}
@@ -151,7 +151,7 @@ export default function Users() {
         </div>
 
         {pagination && pagination.totalPages > 1 && (
-          <div className="border-t border-slate-100 px-4 dark:border-slate-800">
+          <div className="border-t border-slate-100 px-4 dark:border-[#262626]">
             <Pagination
               page={pagination.page}
               totalPages={pagination.totalPages}

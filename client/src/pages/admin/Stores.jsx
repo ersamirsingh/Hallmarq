@@ -51,10 +51,10 @@ export default function Stores() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
             Store management
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-[#9A9A9A]">
             Create, categorize, and oversee registered stores
           </p>
         </div>
@@ -91,7 +91,7 @@ export default function Stores() {
       <Card>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50">
+            <thead className="border-b border-slate-200 bg-slate-50/50 dark:border-[#262626] dark:bg-[#151515]">
               <tr>
                 <SortableTh field="name" sortField={sortBy} sortOrder={sortOrder} onSort={handleSort}>
                   Store
@@ -105,15 +105,15 @@ export default function Stores() {
                 <SortableTh field="category" sortField={sortBy} sortOrder={sortOrder} onSort={handleSort}>
                   Category
                 </SortableTh>
-                <th className="px-4 py-3 text-xs font-semibold uppercase text-slate-600 dark:text-slate-300">
+                <th className="px-4 py-3 text-xs font-semibold uppercase text-slate-600 dark:text-[#9A9A9A]">
                   Rating
                 </th>
-                <th className="px-4 py-3 text-xs font-semibold uppercase text-slate-600 dark:text-slate-300">
+                <th className="px-4 py-3 text-xs font-semibold uppercase text-slate-600 dark:text-[#9A9A9A]">
                   Owner
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-100 dark:divide-[#262626]">
               {isLoading ? (
                 <tr>
                   <td colSpan={6} className="p-6">
@@ -133,24 +133,24 @@ export default function Stores() {
                 </tr>
               ) : (
                 stores.map((s) => (
-                  <tr key={s.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
-                    <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{s.name}</td>
-                    <td className="px-4 py-3.5 text-slate-600 dark:text-slate-400">{s.email}</td>
-                    <td className="px-4 py-3.5 text-slate-500 dark:text-slate-400 truncate max-w-xs">{s.address}</td>
+                  <tr key={s.id} className="hover:bg-slate-50/50 dark:hover:bg-[#151515]">
+                    <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-[#FFFFFF]">{s.name}</td>
+                    <td className="px-4 py-3.5 text-slate-600 dark:text-[#9A9A9A]">{s.email}</td>
+                    <td className="px-4 py-3.5 text-slate-500 dark:text-[#9A9A9A] truncate max-w-xs">{s.address}</td>
                     <td className="px-4 py-3.5">
-                      <Badge variant="secondary" size="sm">
+                      <Badge variant="category" size="sm">
                         {s.category?.name || '—'}
                       </Badge>
                     </td>
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-1.5">
-                        <Star className="h-4 w-4 fill-rating text-rating" />
-                        <span className="font-bold text-rating">
+                        <Star className="h-4 w-4 fill-rating text-rating dark:fill-[#FF7A3D] dark:text-[#FF7A3D]" />
+                        <span className="font-bold text-rating dark:text-[#FF7A3D]">
                           {typeof s.rating === 'object' && s.rating !== null
                             ? s.rating.average ?? '0.0'
                             : s.rating ?? '0.0'}
                         </span>
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-slate-400 dark:text-[#9A9A9A]">
                           (
                           {typeof s.rating === 'object' && s.rating !== null
                             ? s.rating.count ?? 0
@@ -159,8 +159,8 @@ export default function Stores() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 text-slate-600 dark:text-slate-400">
-                      {s.owner ? s.owner.name : <span className="text-slate-400 italic">Unassigned</span>}
+                    <td className="px-4 py-3.5 text-slate-600 dark:text-[#9A9A9A]">
+                      {s.owner ? s.owner.name : <span className="text-slate-400 dark:text-[#9A9A9A] italic">Unassigned</span>}
                     </td>
                   </tr>
                 ))
@@ -170,7 +170,7 @@ export default function Stores() {
         </div>
 
         {pagination && pagination.totalPages > 1 && (
-          <div className="border-t border-slate-100 px-4 dark:border-slate-800">
+          <div className="border-t border-slate-100 px-4 dark:border-[#262626]">
             <Pagination
               page={pagination.page}
               totalPages={pagination.totalPages}

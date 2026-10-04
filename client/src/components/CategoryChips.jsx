@@ -14,8 +14,8 @@ export default function CategoryChips({
         onClick={() => onSelect('')}
         className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs transition-all duration-150 cursor-pointer ${
           selectedCategory === ''
-            ? 'bg-slate-900 text-white font-semibold shadow-sm dark:bg-white dark:text-slate-950'
-            : 'bg-white/80 text-slate-600 border border-slate-200/90 font-medium hover:bg-slate-100 hover:text-slate-900 dark:bg-slate-900/80 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white'
+            ? 'bg-slate-900 text-white font-semibold shadow-sm dark:bg-[#6C86FF] dark:text-[#111111] dark:shadow-[0_0_15px_rgba(108,134,255,0.25)]'
+            : 'bg-white/80 text-slate-600 border border-slate-200/90 font-medium hover:bg-slate-100 hover:text-slate-900 dark:bg-[#0F0F0F] dark:border-[#262626] dark:text-[#9A9A9A] dark:hover:bg-[#1A1A1A] dark:hover:text-[#FFFFFF] dark:hover:border-[#383838]'
         }`}
       >
         All categories
@@ -30,8 +30,8 @@ export default function CategoryChips({
             onClick={() => onSelect(cat.name)}
             className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs transition-all duration-150 cursor-pointer ${
               isSelected
-                ? 'bg-slate-900 text-white font-semibold shadow-sm dark:bg-white dark:text-slate-950'
-                : 'bg-white/80 text-slate-600 border border-slate-200/90 font-medium hover:bg-slate-100 hover:text-slate-900 dark:bg-slate-900/80 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white'
+                ? 'bg-slate-900 text-white font-semibold shadow-sm dark:bg-[#6C86FF] dark:text-[#111111] dark:shadow-[0_0_15px_rgba(108,134,255,0.25)]'
+                : 'bg-white/80 text-slate-600 border border-slate-200/90 font-medium hover:bg-slate-100 hover:text-slate-900 dark:bg-[#0F0F0F] dark:border-[#262626] dark:text-[#9A9A9A] dark:hover:bg-[#1A1A1A] dark:hover:text-[#FFFFFF] dark:hover:border-[#383838]'
             }`}
           >
             {cat.name}
@@ -43,7 +43,7 @@ export default function CategoryChips({
         <button
           type="button"
           onClick={onAdd}
-          className="inline-flex shrink-0 items-center gap-1 rounded-full border border-dashed border-slate-300 bg-transparent px-3 py-1.5 text-xs font-medium text-slate-600 hover:border-slate-400 hover:text-slate-900 dark:border-slate-700 dark:text-slate-400 dark:hover:border-slate-500 dark:hover:text-white cursor-pointer"
+          className="inline-flex shrink-0 items-center gap-1 rounded-full border border-dashed border-slate-300 bg-transparent px-3 py-1.5 text-xs font-medium text-slate-600 hover:border-slate-400 hover:text-slate-900 dark:border-[#262626] dark:text-[#9A9A9A] dark:hover:border-[#6C86FF] dark:hover:text-[#6C86FF] cursor-pointer"
         >
           <Plus className="h-3 w-3" />
           <span>New category</span>

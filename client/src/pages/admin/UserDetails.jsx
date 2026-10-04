@@ -50,7 +50,7 @@ export default function UserDetails() {
             <span>Back to users</span>
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
           User details
         </h1>
       </div>
@@ -73,20 +73,20 @@ export default function UserDetails() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Full name</span>
-              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-white">{user.name}</p>
+              <span className="text-xs font-semibold text-slate-500 dark:text-[#9A9A9A]">Full name</span>
+              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-[#FFFFFF]">{user.name}</p>
             </div>
             <div>
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Email address</span>
-              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-white">{user.email}</p>
+              <span className="text-xs font-semibold text-slate-500 dark:text-[#9A9A9A]">Email address</span>
+              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-[#FFFFFF]">{user.email}</p>
             </div>
             <div>
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Physical address</span>
-              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-white">{user.address || '—'}</p>
+              <span className="text-xs font-semibold text-slate-500 dark:text-[#9A9A9A]">Physical address</span>
+              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-[#FFFFFF]">{user.address || '—'}</p>
             </div>
             <div>
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Member since</span>
-              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-white">
+              <span className="text-xs font-semibold text-slate-500 dark:text-[#9A9A9A]">Member since</span>
+              <p className="mt-0.5 text-sm font-medium text-slate-900 dark:text-[#FFFFFF]">
                 {new Date(user.createdAt).toLocaleDateString()}
               </p>
             </div>
@@ -103,23 +103,23 @@ export default function UserDetails() {
               {storeInfo ? (
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-900 dark:bg-[#1A1A1A] dark:text-[#6C86FF]">
                       <Store className="h-5 w-5" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-slate-900 dark:text-white">{storeInfo.name}</h4>
+                      <h4 className="font-semibold text-slate-900 dark:text-[#FFFFFF]">{storeInfo.name}</h4>
                       {storeInfo.category?.name && (
-                        <p className="text-xs text-slate-500 dark:text-slate-400">{storeInfo.category.name}</p>
+                        <p className="text-xs text-slate-500 dark:text-[#9A9A9A]">{storeInfo.category.name}</p>
                       )}
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Store rating</span>
+                  <div className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-4 dark:border-[#262626] dark:bg-[#151515]">
+                    <span className="text-xs font-semibold text-slate-500 dark:text-[#9A9A9A]">Store rating</span>
                     <div className="mt-1 flex items-center gap-2">
-                      <div className="flex items-center text-amber-500">
-                        <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
-                        <span className="ml-1.5 text-xl font-bold text-slate-900 dark:text-white">
+                      <div className="flex items-center text-[#FF7A3D]">
+                        <Star className="h-5 w-5 fill-[#FF7A3D] text-[#FF7A3D]" />
+                        <span className="ml-1.5 text-xl font-bold text-slate-900 dark:text-[#FFFFFF]">
                           {storeInfo.rating?.average || user.storeRating || '0.0'}
                         </span>
                       </div>
@@ -127,7 +127,7 @@ export default function UserDetails() {
                   </div>
                 </div>
               ) : (
-                <div className="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                <div className="py-8 text-center text-sm text-slate-500 dark:text-[#9A9A9A]">
                   No store is currently assigned to this store owner.
                 </div>
               )}

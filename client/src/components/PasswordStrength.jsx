@@ -28,7 +28,7 @@ export default function PasswordStrength({ password = '' }) {
   const label = getLabel();
 
   const getSegmentColor = (index) => {
-    if (index >= score) return 'bg-slate-200 dark:bg-slate-800';
+    if (index >= score) return 'bg-slate-200 dark:bg-[#262626]';
     if (score === 1) return 'bg-rose-500';
     if (score === 2) return 'bg-amber-500';
     if (score === 3) return 'bg-indigo-500';
@@ -46,7 +46,7 @@ export default function PasswordStrength({ password = '' }) {
         ))}
       </div>
       <div className="flex justify-between text-[11px]">
-        <span className="text-slate-500 dark:text-slate-400 font-medium">Password strength</span>
+        <span className="text-slate-500 dark:text-[#9A9A9A] font-medium">Password strength</span>
         <span className={`font-semibold ${label.color}`}>{label.text}</span>
       </div>
     </div>

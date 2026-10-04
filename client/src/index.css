@@ -21,8 +21,8 @@
 
 .dark body,
 html.dark body {
-  background-color: #090D16;
-  color: #F8FAFC;
+  background-color: #000000;
+  color: #FFFFFF;
 }
 
 ::selection {
@@ -32,8 +32,8 @@ html.dark body {
 
 .dark ::selection,
 html.dark ::selection {
-  background-color: #312E81;
-  color: #EEF2FF;
+  background-color: #6C86FF;
+  color: #111111;
 }
 
 ::-webkit-scrollbar {
@@ -55,9 +55,9 @@ html.dark ::selection {
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: #262626;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: #383838;
 }

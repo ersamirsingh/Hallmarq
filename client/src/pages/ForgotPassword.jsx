@@ -32,20 +32,20 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-stock-100 dark:bg-stock-950">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-slate-50 dark:bg-[#000000]">
       <div className="absolute right-6 top-6">
         <ThemeToggle />
       </div>
 
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-ink-900 text-white shadow-sm dark:bg-ink-100 dark:text-ink-950">
-            <Award className="h-7 w-7" />
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm dark:bg-[#6C86FF] dark:text-[#111111]">
+            <Award className="h-6 w-6" />
           </div>
-          <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink-950 dark:text-white">
+          <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
             Reset password
           </h1>
-          <p className="mt-1 text-sm text-stock-500 dark:text-stock-400">
+          <p className="mt-1 text-sm text-slate-500 dark:text-[#9A9A9A]">
             Request a secure password reset link
           </p>
         </div>
@@ -65,7 +65,7 @@ export default function ForgotPassword() {
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
                   <MailCheck className="h-6 w-6" />
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
+                <p className="text-sm text-slate-600 dark:text-[#9A9A9A]">
                   If an account exists for that email, we have sent instructions to reset your password.
                 </p>
                 <Link to="/login" className="inline-block pt-2">
@@ -99,7 +99,7 @@ export default function ForgotPassword() {
                 <div className="pt-2 text-center">
                   <Link
                     to="/login"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-[#6C86FF] dark:hover:underline"
                   >
                     <ArrowLeft className="h-3.5 w-3.5" />
                     <span>Back to sign in</span>

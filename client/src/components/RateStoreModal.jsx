@@ -89,7 +89,7 @@ export default function RateStoreModal({ isOpen, onClose, store, onSuccess }) {
       )}
 
       {isEditing && !confirmDelete && (
-        <div className="mb-4 rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 text-xs text-amber-800 dark:text-amber-200">
+        <div className="mb-4 rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 text-xs text-amber-800 dark:bg-[#FF7A3D]/[0.18] dark:border-[#FF7A3D]/30 dark:text-[#FF7A3D]">
           You previously gave this store <span className="font-bold">{existingValue} stars</span>. Modify your stars or comments below, or remove your rating.
         </div>
       )}
@@ -101,7 +101,7 @@ export default function RateStoreModal({ isOpen, onClose, store, onSuccess }) {
             <button
               type="button"
               onClick={() => setConfirmDelete(false)}
-              className="text-xs font-semibold text-slate-600 hover:text-slate-800 dark:text-slate-300"
+              className="text-xs font-semibold text-slate-600 hover:text-slate-800 dark:text-[#9A9A9A] dark:hover:text-[#FFFFFF]"
             >
               Cancel
             </button>
@@ -119,12 +119,12 @@ export default function RateStoreModal({ isOpen, onClose, store, onSuccess }) {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+          <label className="mb-2 block text-xs font-semibold text-slate-700 dark:text-[#FFFFFF]">
             {isEditing ? 'Update your star rating (1-5 stars)' : 'Select your rating (1-5 stars)'}
           </label>
           <div className="flex items-center gap-3">
             <StarRating value={value} onChange={setValue} interactive size="lg" />
-            <span className={`text-sm font-bold ${value > 0 ? 'text-amber-500' : 'text-slate-400'}`}>
+            <span className={`text-sm font-bold ${value > 0 ? 'text-amber-500 dark:text-[#FF7A3D]' : 'text-slate-400 dark:text-[#9A9A9A]'}`}>
               {value > 0 ? `${value} of 5 stars` : 'Choose stars'}
             </span>
           </div>

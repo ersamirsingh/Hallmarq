@@ -7,6 +7,19 @@ export default {
         sans: ['"Plus Jakarta Sans Variable"', 'system-ui', 'sans-serif']
       },
       colors: {
+        dark: {
+          bg: '#000000',
+          surface: '#0F0F0F',
+          surfaceSubtle: '#151515',
+          text: '#FFFFFF',
+          muted: '#9A9A9A',
+          accent: '#6C86FF',
+          accentText: '#111111',
+          star: '#FF7A3D',
+          border: '#262626',
+          categoryBg: 'rgba(108, 134, 255, 0.18)',
+          categoryText: '#6C86FF'
+        },
         stock: {
           50: '#F8FAFC',
           100: '#F0F3F6',
@@ -40,8 +53,8 @@ export default {
           border: '#FECDD3',
           DEFAULT: '#E11D48',
           hover: '#BE123C',
-          darkBg: 'rgba(225, 29, 72, 0.12)',
-          darkBorder: 'rgba(225, 29, 72, 0.3)'
+          darkBg: 'rgba(255, 122, 61, 0.18)',
+          darkBorder: 'rgba(255, 122, 61, 0.3)'
         }
       },
       boxShadow: {

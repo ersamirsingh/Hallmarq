@@ -147,20 +147,20 @@ export default function AdminDashboard() {
             <div className="h-64 w-full pt-2">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                  <YAxis stroke="#94a3b8" fontSize={11} allowDecimals={false} tickLine={false} />
+                  <XAxis dataKey="date" stroke="#9A9A9A" fontSize={11} tickLine={false} />
+                  <YAxis stroke="#9A9A9A" fontSize={11} allowDecimals={false} tickLine={false} />
                   <Tooltip
-                    cursor={{ fill: 'rgba(15, 23, 42, 0.05)' }}
+                    cursor={{ fill: 'rgba(108, 134, 255, 0.08)' }}
                     contentStyle={{
-                      backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                      color: '#ffffff',
+                      backgroundColor: '#0F0F0F',
+                      color: '#FFFFFF',
                       borderRadius: '12px',
-                      border: 'none',
+                      border: '1px solid #262626',
                       fontSize: '12px',
-                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.2)'
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)'
                     }}
                   />
-                  <Bar dataKey="ratings" fill="#0f172a" radius={[6, 6, 0, 0]} className="dark:fill-slate-100" />
+                  <Bar dataKey="ratings" fill="#0f172a" radius={[6, 6, 0, 0]} className="dark:fill-[#6C86FF]" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -172,14 +172,14 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
+                  <Star className="h-4 w-4 text-amber-500 fill-amber-500 dark:text-[#FF7A3D] dark:fill-[#FF7A3D]" />
                   <span>Rating score distribution</span>
                 </CardTitle>
                 <CardDescription>Breakdown by star score across all submissions</CardDescription>
               </div>
-              <div className="flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white">
+              <div className="flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-[#FFFFFF]">
                 <span>{averageRating}</span>
-                <span className="text-amber-500">★</span>
+                <span className="text-amber-500 dark:text-[#FF7A3D]">★</span>
               </div>
             </div>
           </CardHeader>
@@ -187,16 +187,16 @@ export default function AdminDashboard() {
             <div className="space-y-3.5 pt-1">
               {ratingDistribution.map((item) => (
                 <div key={item.stars} className="flex items-center gap-3">
-                  <div className="w-12 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <div className="w-12 text-xs font-semibold text-slate-700 dark:text-[#FFFFFF]">
                     {item.stars}
                   </div>
-                  <div className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                  <div className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-slate-100 dark:bg-[#262626]">
                     <div
-                      className="h-full rounded-full bg-amber-400 transition-all duration-500"
+                      className="h-full rounded-full bg-amber-400 dark:bg-[#FF7A3D] transition-all duration-500"
                       style={{ width: `${item.percentage}%` }}
                     />
                   </div>
-                  <div className="w-16 text-right text-xs font-medium text-slate-500 dark:text-slate-400">
+                  <div className="w-16 text-right text-xs font-medium text-slate-500 dark:text-[#9A9A9A]">
                     {item.count} ({item.percentage}%)
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default function AdminDashboard() {
         <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
-              <Users className="h-4 w-4 text-slate-700 dark:text-slate-300" />
+              <Users className="h-4 w-4 text-slate-700 dark:text-[#FFFFFF]" />
               <span>User accounts</span>
             </CardTitle>
             <CardDescription>Platform accounts grouped by role</CardDescription>
@@ -218,15 +218,15 @@ export default function AdminDashboard() {
           <CardContent className="space-y-3">
             <div
               onClick={() => navigate('/admin/users')}
-              className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 hover:bg-slate-100 cursor-pointer transition dark:bg-slate-800/40 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800"
+              className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 hover:bg-slate-100 cursor-pointer transition dark:bg-[#151515] dark:hover:bg-[#1A1A1A] border border-slate-100 dark:border-[#262626]"
             >
               <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+                <div className="h-8 w-8 rounded-lg bg-blue-500/10 text-blue-600 dark:bg-[#6C86FF]/[0.18] dark:text-[#6C86FF] flex items-center justify-center font-bold">
                   <UserCheck className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-900 dark:text-white">Normal Users</p>
-                  <p className="text-[11px] text-slate-400">Browsers & raters</p>
+                  <p className="text-xs font-semibold text-slate-900 dark:text-[#FFFFFF]">Normal Users</p>
+                  <p className="text-[11px] text-slate-400 dark:text-[#9A9A9A]">Browsers & raters</p>
                 </div>
               </div>
               <Badge variant="default" size="sm">
@@ -236,15 +236,15 @@ export default function AdminDashboard() {
 
             <div
               onClick={() => navigate('/admin/users')}
-              className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 hover:bg-slate-100 cursor-pointer transition dark:bg-slate-800/40 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800"
+              className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 hover:bg-slate-100 cursor-pointer transition dark:bg-[#151515] dark:hover:bg-[#1A1A1A] border border-slate-100 dark:border-[#262626]"
             >
               <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
+                <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-600 dark:bg-[#FF7A3D]/[0.18] dark:text-[#FF7A3D] flex items-center justify-center font-bold">
                   <Building2 className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-900 dark:text-white">Store Owners</p>
-                  <p className="text-[11px] text-slate-400">Business managers</p>
+                  <p className="text-xs font-semibold text-slate-900 dark:text-[#FFFFFF]">Store Owners</p>
+                  <p className="text-[11px] text-slate-400 dark:text-[#9A9A9A]">Business managers</p>
                 </div>
               </div>
               <Badge variant="warning" size="sm">

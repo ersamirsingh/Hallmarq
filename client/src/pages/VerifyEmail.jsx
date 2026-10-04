@@ -49,17 +49,17 @@ export default function VerifyEmail() {
   }, [token, refreshUser]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-stock-100 dark:bg-stock-950">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-slate-50 dark:bg-[#000000]">
       <div className="absolute right-6 top-6">
         <ThemeToggle />
       </div>
 
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-ink-900 text-white shadow-sm dark:bg-ink-100 dark:text-ink-950">
-            <Award className="h-7 w-7" />
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm dark:bg-[#6C86FF] dark:text-[#111111]">
+            <Award className="h-6 w-6" />
           </div>
-          <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink-950 dark:text-white">
+          <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
             Email verification
           </h1>
         </div>
@@ -72,15 +72,15 @@ export default function VerifyEmail() {
           <CardContent>
             {loading ? (
               <div className="flex flex-col items-center justify-center py-6 text-center">
-                <Loader2 className="h-8 w-8 animate-spin text-ink-800 dark:text-ink-300" />
-                <p className="mt-3 text-sm text-stock-500 dark:text-stock-400">Verifying link...</p>
+                <Loader2 className="h-8 w-8 animate-spin text-ink-800 dark:text-[#6C86FF]" />
+                <p className="mt-3 text-sm text-stock-500 dark:text-[#9A9A9A]">Verifying link...</p>
               </div>
             ) : success ? (
               <div className="space-y-4 text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
                   <CheckCircle2 className="h-6 w-6" />
                 </div>
-                <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{message}</p>
+                <p className="text-sm font-medium text-slate-800 dark:text-[#FFFFFF]">{message}</p>
                 <Link to="/stores" className="inline-block pt-2">
                   <Button size="md">Continue to stores</Button>
                 </Link>
