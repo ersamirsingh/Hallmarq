@@ -51,9 +51,7 @@ export default function Signup() {
 
       <div className="relative w-full max-w-md">
         <div className="mb-6 text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md dark:bg-[#6C86FF] dark:text-[#111111]">
-            <Award className="h-6 w-6" />
-          </div>
+          <img src="/logo.png" alt="Hallmarq" className="inline-block h-14 w-14 rounded-2xl object-cover border border-slate-200 dark:border-[#262626] shadow-md" />
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
             Create your account
           </h1>
