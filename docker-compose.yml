@@ -48,7 +48,6 @@ services:
       SMTP_PORT: 1025
       MAIL_FROM: ${MAIL_FROM:-noreply@hallmarq.local}
       REQUIRE_EMAIL_VERIFICATION: "false"
-      ENABLE_DOCS: "true"
       LOG_LEVEL: info
     ports:
       - "5000:5000"

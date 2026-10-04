@@ -20,14 +20,6 @@ const envSchema = z.object({
     .enum(['true', 'false'])
     .default('false')
     .transform((val) => val === 'true'),
-  ENABLE_DOCS: z
-    .string()
-    .optional()
-    .transform((val) => {
-      if (val === 'true') return true;
-      if (val === 'false') return false;
-      return process.env.NODE_ENV !== 'production';
-    }),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info')
 });
 

@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: hallmarq-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: 1
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false
+      - key: REQUIRE_EMAIL_VERIFICATION
+        value: false
+      - key: ENABLE_DOCS
+        value: true
+      - key: LOG_LEVEL
+        value: info
