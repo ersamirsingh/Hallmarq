@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, isValidElement } from 'react';
 
 export const Input = forwardRef(function Input(
   {
@@ -31,7 +31,11 @@ export const Input = forwardRef(function Input(
       <div className="relative flex items-center">
         {LeftIcon && (
           <div className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center text-slate-400 dark:text-slate-500">
-            {typeof LeftIcon === 'function' ? <LeftIcon className="h-4 w-4" /> : LeftIcon}
+            {isValidElement(LeftIcon) ? (
+              LeftIcon
+            ) : (
+              <LeftIcon className="h-4 w-4" />
+            )}
           </div>
         )}
         <input
