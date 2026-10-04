@@ -15,6 +15,7 @@ export default function Sidebar({ onClose }) {
           { to: '/admin/stores', label: 'Stores', icon: Store },
           { to: '/profile', label: 'Profile', icon: User }
         ];
+      case 'OWNER':
       case 'STORE_OWNER':
         return [
           { to: '/owner', label: 'My Store', icon: LayoutDashboard, end: true },

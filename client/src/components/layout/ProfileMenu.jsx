@@ -40,7 +40,7 @@ export default function ProfileMenu() {
     : 'U';
 
   const roleVariant =
-    user.role === 'ADMIN' ? 'danger' : user.role === 'STORE_OWNER' ? 'warning' : 'default';
+    user.role === 'ADMIN' ? 'danger' : user.role === 'OWNER' || user.role === 'STORE_OWNER' ? 'warning' : 'default';
 
   const handleLogout = async () => {
     setOpen(false);

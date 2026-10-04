@@ -9,7 +9,9 @@ export const adminCreateUserSchema = z.object({
       email: emailSchema,
       address: addressSchema,
       password: passwordSchema,
-      role: z.nativeEnum(Role, { required_error: 'Role is required' })
+      role: z
+        .enum(['ADMIN', 'USER', 'OWNER', 'STORE_OWNER'])
+        .transform((val) => (val === 'STORE_OWNER' ? Role.OWNER : (val as Role)))
     })
     .strict()
 });

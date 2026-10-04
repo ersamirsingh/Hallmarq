@@ -8,7 +8,7 @@ export default function Profile() {
   if (!user) return null;
 
   const roleVariant =
-    user.role === 'ADMIN' ? 'danger' : user.role === 'STORE_OWNER' ? 'warning' : 'default';
+    user.role === 'ADMIN' ? 'danger' : user.role === 'OWNER' || user.role === 'STORE_OWNER' ? 'warning' : 'default';
 
   return (
     <div className="space-y-6">

@@ -12,7 +12,7 @@ const addUserSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   password: passwordSchema,
   address: z.string().max(400, 'Address must not exceed 400 characters').optional().default(''),
-  role: z.enum(['ADMIN', 'USER', 'STORE_OWNER'])
+  role: z.enum(['ADMIN', 'USER', 'STORE_OWNER', 'OWNER'])
 });
 
 export default function AddUserModal({ isOpen, onClose, onSuccess }) {
@@ -31,7 +31,11 @@ export default function AddUserModal({ isOpen, onClose, onSuccess }) {
   const onSubmit = async (values) => {
     setServerError('');
     try {
-      await adminApi.createUser(values);
+      const payload = {
+        ...values,
+        role: values.role === 'STORE_OWNER' ? 'OWNER' : values.role
+      };
+      await adminApi.createUser(payload);
       toast.success('User created successfully.');
       reset();
       onSuccess();
@@ -82,7 +86,7 @@ export default function AddUserModal({ isOpen, onClose, onSuccess }) {
           error={errors.role?.message}
           options={[
             { value: 'USER', label: 'Normal User' },
-            { value: 'STORE_OWNER', label: 'Store Owner' },
+            { value: 'OWNER', label: 'Store Owner' },
             { value: 'ADMIN', label: 'System Administrator' }
           ]}
           {...register('role')}

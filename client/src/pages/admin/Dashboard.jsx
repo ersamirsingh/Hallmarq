@@ -32,11 +32,15 @@ export default function AdminDashboard() {
     );
   }
 
-  const { totalUsers, totalStores, totalRatings, dailyRatings } = data.stats;
+  const stats = data?.stats || data || {};
+  const totalUsers = stats.totalUsers ?? 0;
+  const totalStores = stats.totalStores ?? 0;
+  const totalRatings = stats.totalRatings ?? 0;
+  const dailyRatings = stats.dailyRatings || stats.ratingsPerDay || [];
 
-  const chartData = (dailyRatings || []).map((item) => ({
-    date: item.date.slice(5),
-    ratings: item.count
+  const chartData = dailyRatings.map((item) => ({
+    date: item?.date ? item.date.slice(5) : '',
+    ratings: item?.count ?? 0
   }));
 
   return (

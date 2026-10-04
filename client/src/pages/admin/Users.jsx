@@ -78,7 +78,7 @@ export default function Users() {
             options={[
               { value: '', label: 'All roles' },
               { value: 'USER', label: 'Normal User' },
-              { value: 'STORE_OWNER', label: 'Store Owner' },
+              { value: 'OWNER', label: 'Store Owner' },
               { value: 'ADMIN', label: 'Administrator' }
             ]}
           />
@@ -132,7 +132,7 @@ export default function Users() {
                     <td className="px-4 py-3.5 text-slate-600 dark:text-slate-400">{u.email}</td>
                     <td className="px-4 py-3.5 text-slate-500 dark:text-slate-400 truncate max-w-xs">{u.address || '—'}</td>
                     <td className="px-4 py-3.5">
-                      <Badge variant={u.role === 'ADMIN' ? 'danger' : u.role === 'STORE_OWNER' ? 'warning' : 'default'} size="sm">
+                      <Badge variant={u.role === 'ADMIN' ? 'danger' : u.role === 'OWNER' || u.role === 'STORE_OWNER' ? 'warning' : 'default'} size="sm">
                         {u.role}
                       </Badge>
                     </td>

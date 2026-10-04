@@ -30,7 +30,7 @@ export default function Login() {
       const user = await login(values);
       const destination =
         location.state?.from?.pathname ||
-        (user.role === 'ADMIN' ? '/admin' : user.role === 'STORE_OWNER' ? '/owner' : '/stores');
+        (user.role === 'ADMIN' ? '/admin' : user.role === 'OWNER' || user.role === 'STORE_OWNER' ? '/owner' : '/stores');
       navigate(destination, { replace: true });
     } catch (err) {
       setServerError(err.response?.data?.message || 'Invalid email or password.');

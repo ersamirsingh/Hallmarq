@@ -12,7 +12,20 @@ import {
 export const getStats = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const stats = await getAdminStats();
-    res.json(stats);
+    res.json({
+      stats: {
+        totalUsers: stats.totalUsers,
+        totalStores: stats.totalStores,
+        totalRatings: stats.totalRatings,
+        dailyRatings: stats.ratingsPerDay,
+        ratingsPerDay: stats.ratingsPerDay
+      },
+      totalUsers: stats.totalUsers,
+      totalStores: stats.totalStores,
+      totalRatings: stats.totalRatings,
+      dailyRatings: stats.ratingsPerDay,
+      ratingsPerDay: stats.ratingsPerDay
+    });
   } catch (err) {
     next(err);
   }

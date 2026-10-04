@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 import AppShell from './components/layout/AppShell';
 
 import Login from './pages/Login';
@@ -34,7 +35,7 @@ function HomeRedirect() {
   if (loading) return null;
   if (!user) return <Navigate to="/login" replace />;
   if (user.role === 'ADMIN') return <Navigate to="/admin" replace />;
-  if (user.role === 'STORE_OWNER') return <Navigate to="/owner" replace />;
+  if (user.role === 'OWNER' || user.role === 'STORE_OWNER') return <Navigate to="/owner" replace />;
   return <Navigate to="/stores" replace />;
 }
 
@@ -56,11 +57,13 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomeRedirect />} />
 
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route element={<PublicRoute />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
+              </Route>
 
               <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
                 <Route path="/stores" element={<Stores />} />
@@ -73,7 +76,7 @@ export default function App() {
                   <Route path="/admin/stores" element={<AdminStores />} />
                 </Route>
 
-                <Route element={<ProtectedRoute allowedRoles={['STORE_OWNER']} />}>
+                <Route element={<ProtectedRoute allowedRoles={['OWNER', 'STORE_OWNER']} />}>
                   <Route path="/owner" element={<OwnerDashboard />} />
                 </Route>
               </Route>

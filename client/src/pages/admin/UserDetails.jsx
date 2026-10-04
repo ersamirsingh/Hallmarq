@@ -38,7 +38,7 @@ export default function UserDetails() {
   }
 
   const { user } = data;
-  const isOwner = user.role === 'STORE_OWNER';
+  const isOwner = user.role === 'OWNER' || user.role === 'STORE_OWNER';
 
   return (
     <div className="space-y-6">
@@ -60,7 +60,7 @@ export default function UserDetails() {
             <div className="flex items-center justify-between">
               <CardTitle>Account profile</CardTitle>
               <div className="flex items-center gap-2">
-                <Badge variant={user.role === 'ADMIN' ? 'danger' : user.role === 'STORE_OWNER' ? 'warning' : 'default'}>
+                <Badge variant={user.role === 'ADMIN' ? 'danger' : user.role === 'OWNER' || user.role === 'STORE_OWNER' ? 'warning' : 'default'}>
                   {user.role}
                 </Badge>
                 <Badge variant={user.emailVerified ? 'success' : 'secondary'}>

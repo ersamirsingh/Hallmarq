@@ -19,11 +19,14 @@ export default function ProtectedRoute({ allowedRoles, children }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
+  const userRole = user.role === 'STORE_OWNER' ? 'OWNER' : user.role;
+  const normalizedAllowed = allowedRoles?.map((r) => (r === 'STORE_OWNER' ? 'OWNER' : r));
+
+  if (normalizedAllowed && !normalizedAllowed.includes(userRole)) {
     const defaultRoute =
-      user.role === 'ADMIN'
+      userRole === 'ADMIN'
         ? '/admin'
-        : user.role === 'STORE_OWNER'
+        : userRole === 'OWNER'
         ? '/owner'
         : '/stores';
     return <Navigate to={defaultRoute} replace />;
