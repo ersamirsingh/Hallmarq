@@ -17,6 +17,7 @@ import { categoryRouter } from './routes/category.routes.js';
 import { storeRouter } from './routes/store.routes.js';
 import { ownerRouter } from './routes/owner.routes.js';
 import { profileRouter } from './routes/profile.routes.js';
+import { requestLogger } from './middleware/requestLogger.js';
 
 export const createApp = (): Express => {
   const app = express();
@@ -24,6 +25,7 @@ export const createApp = (): Express => {
   app.set('trust proxy', env.TRUST_PROXY);
 
   app.use(requestId);
+  app.use(requestLogger);
 
   app.use(
     helmet({

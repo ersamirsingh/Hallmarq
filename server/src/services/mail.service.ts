@@ -37,7 +37,8 @@ export const sendVerificationEmail = async (email: string, name: string, token: 
       html: htmlContent
     });
   } catch (err) {
-    logger.error({ err, email }, 'Failed to send verification email');
+    const msg = err instanceof Error ? err.message : String(err);
+    logger.error(`Failed to send verification email to ${email}: ${msg}`);
   }
 };
 
@@ -67,6 +68,7 @@ export const sendPasswordResetEmail = async (email: string, name: string, token:
       html: htmlContent
     });
   } catch (err) {
-    logger.error({ err, email }, 'Failed to send password reset email');
+    const msg = err instanceof Error ? err.message : String(err);
+    logger.error(`Failed to send password reset email to ${email}: ${msg}`);
   }
 };

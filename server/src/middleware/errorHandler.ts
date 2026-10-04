@@ -63,7 +63,8 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
     return;
   }
 
-  logger.error({ err, requestId, url: req.originalUrl, method: req.method }, 'Unhandled server error');
+  const message = err instanceof Error ? err.message : String(err);
+  logger.error(`${req.method} ${req.originalUrl} 500 - Error: ${message}`);
 
   res.status(500).json({
     message: env.NODE_ENV === 'production' ? 'Internal server error' : err.message || 'Internal server error',

@@ -6,11 +6,11 @@ import { prisma } from './db/prisma.js';
 const app = createApp();
 
 const server = app.listen(env.PORT, () => {
-  logger.info({ port: env.PORT, env: env.NODE_ENV }, 'Server started');
+  logger.info(`Server listening on port ${env.PORT} (${env.NODE_ENV})`);
 });
 
 const handleShutdown = (signal: string) => {
-  logger.info({ signal }, 'Shutting down gracefully');
+  logger.info(`Shutdown signal ${signal} received`);
   server.close(async () => {
     logger.info('HTTP server closed');
     await prisma.$disconnect();
