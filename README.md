@@ -75,24 +75,6 @@ docker compose up --build
 
 ---
 
-## Running Automated Tests
-
-### Backend Test Suite
-The backend contains 45 integration tests covering validation, authentication, lockout protection, role-based access control, ratings upsert, pagination, and injection defenses.
-```bash
-cd server
-npm test
-```
-
-### Frontend Test Suite
-The frontend contains 30 unit and integration tests using Vitest and React Testing Library covering UI primitives, theme switching, forms, routing guards, and role screens.
-```bash
-cd client
-npm test
-```
-
----
-
 ## Environment Variable Reference
 
 ### Server Environment Variables
@@ -100,9 +82,8 @@ npm test
 | Variable | Description | Default |
 |---|---|---|
 | `PORT` | Server listening port | `5000` |
-| `NODE_ENV` | Environment mode (`development`, `test`, `production`) | `development` |
+| `NODE_ENV` | Environment mode (`development`, `production`) | `development` |
 | `DATABASE_URL` | PostgreSQL connection URI | - |
-| `DATABASE_URL_TEST` | Separate PostgreSQL connection URI for testing | - |
 | `JWT_SECRET` | Secret key for JWT signing (minimum 32 characters) | - |
 | `CLIENT_URL` | Comma-separated allowed CORS origins | `http://localhost:5173` |
 | `TRUST_PROXY` | Number of reverse proxies in front of Express | `0` |
