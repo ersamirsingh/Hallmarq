@@ -48,7 +48,7 @@ export default function Sidebar({ onClose }) {
     <aside className="flex h-full w-64 flex-col border-r border-slate-200/80 bg-white/95 dark:border-[#262626] dark:bg-[#0F0F0F] backdrop-blur-md">
       <div className="flex h-16 items-center justify-between px-6 border-b border-slate-100 dark:border-[#262626]">
         <NavLink to="/" className="flex items-center gap-3 font-bold">
-          <img src="/logo.png" alt="Hallmarq" className="h-9 w-9 rounded-xl object-cover border border-slate-200 dark:border-[#262626] shadow-sm" />
+          <img src="/logo.png" alt="Hallmarq" className="h-9 w-9 rounded-full object-cover shadow-sm" />
           <div className="flex flex-col">
             <span className="text-base tracking-tight font-bold text-slate-900 dark:text-[#FFFFFF] leading-tight">
               Hallmarq

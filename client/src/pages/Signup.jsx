@@ -51,7 +51,7 @@ export default function Signup() {
 
       <div className="relative w-full max-w-md">
         <div className="mb-6 text-center">
-          <img src="/logo.png" alt="Hallmarq" className="inline-block h-14 w-14 rounded-2xl object-cover border border-slate-200 dark:border-[#262626] shadow-md" />
+          <img src="/logo.png" alt="Hallmarq" className="inline-block h-16 w-16 rounded-full object-cover shadow-lg" />
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-[#FFFFFF]">
             Create your account
           </h1>
