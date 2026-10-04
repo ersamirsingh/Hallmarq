@@ -65,7 +65,7 @@ export default function Stores() {
       </div>
 
       <div className="space-y-3">
-        <div className="relative">
+        <div>
           <Input
             placeholder="Search stores by name or address..."
             value={search}
@@ -73,9 +73,8 @@ export default function Stores() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="pl-9"
+            leftIcon={Search}
           />
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
         </div>
 
         <CategoryChips

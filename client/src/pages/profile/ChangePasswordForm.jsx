@@ -51,44 +51,44 @@ export default function ChangePasswordForm() {
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="relative">
-            <Input
-              label="Current password"
-              type={showCurrent ? 'text' : 'password'}
-              required
-              autoComplete="current-password"
-              error={errors.currentPassword?.message}
-              {...register('currentPassword')}
-            />
-            <button
-              type="button"
-              onClick={() => setShowCurrent((prev) => !prev)}
-              className="absolute right-3.5 top-8.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
-              aria-label={showCurrent ? 'Hide password' : 'Show password'}
-            >
-              {showCurrent ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
+          <Input
+            label="Current password"
+            type={showCurrent ? 'text' : 'password'}
+            required
+            autoComplete="current-password"
+            error={errors.currentPassword?.message}
+            {...register('currentPassword')}
+            rightElement={
+              <button
+                type="button"
+                onClick={() => setShowCurrent((prev) => !prev)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label={showCurrent ? 'Hide password' : 'Show password'}
+              >
+                {showCurrent ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            }
+          />
 
-          <div className="relative">
-            <Input
-              label="New password"
-              type={showNew ? 'text' : 'password'}
-              required
-              placeholder="8-16 chars, uppercase & special"
-              autoComplete="new-password"
-              error={errors.newPassword?.message}
-              {...register('newPassword')}
-            />
-            <button
-              type="button"
-              onClick={() => setShowNew((prev) => !prev)}
-              className="absolute right-3.5 top-8.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
-              aria-label={showNew ? 'Hide password' : 'Show password'}
-            >
-              {showNew ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
+          <Input
+            label="New password"
+            type={showNew ? 'text' : 'password'}
+            required
+            placeholder="8-16 chars, uppercase & special"
+            autoComplete="new-password"
+            error={errors.newPassword?.message}
+            {...register('newPassword')}
+            rightElement={
+              <button
+                type="button"
+                onClick={() => setShowNew((prev) => !prev)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label={showNew ? 'Hide password' : 'Show password'}
+              >
+                {showNew ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            }
+          />
 
           <PasswordStrength password={newPasswordValue} />
 

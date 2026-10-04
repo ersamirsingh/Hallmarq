@@ -53,7 +53,7 @@ export default function Stores() {
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative flex-1">
+        <div className="flex-1">
           <Input
             placeholder="Search stores by name or address..."
             value={search}
@@ -61,9 +61,8 @@ export default function Stores() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="pl-9.5"
+            leftIcon={Search}
           />
-          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
         </div>
         <div className="w-full sm:w-56">
           <Select

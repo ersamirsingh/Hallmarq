@@ -56,7 +56,7 @@ export default function Users() {
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative flex-1">
+        <div className="flex-1">
           <Input
             placeholder="Search by name, email or address..."
             value={search}
@@ -64,9 +64,8 @@ export default function Users() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="pl-9"
+            leftIcon={Search}
           />
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
         </div>
         <div className="w-full sm:w-48">
           <Select
