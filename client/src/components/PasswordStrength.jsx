@@ -17,7 +17,7 @@ export default function PasswordStrength({ password = '' }) {
       case 2:
         return { text: 'Fair', color: 'text-amber-500' };
       case 3:
-        return { text: 'Good', color: 'text-yellow-500' };
+        return { text: 'Good', color: 'text-indigo-500' };
       case 4:
         return { text: 'Strong', color: 'text-emerald-500' };
       default:
@@ -31,7 +31,7 @@ export default function PasswordStrength({ password = '' }) {
     if (index >= score) return 'bg-slate-200 dark:bg-slate-800';
     if (score === 1) return 'bg-rose-500';
     if (score === 2) return 'bg-amber-500';
-    if (score === 3) return 'bg-yellow-500';
+    if (score === 3) return 'bg-indigo-500';
     return 'bg-emerald-500';
   };
 
@@ -46,7 +46,7 @@ export default function PasswordStrength({ password = '' }) {
         ))}
       </div>
       <div className="flex justify-between text-[11px]">
-        <span className="text-slate-500 dark:text-slate-400">Strength</span>
+        <span className="text-slate-500 dark:text-slate-400 font-medium">Password strength</span>
         <span className={`font-semibold ${label.color}`}>{label.text}</span>
       </div>
     </div>

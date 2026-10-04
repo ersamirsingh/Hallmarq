@@ -210,6 +210,36 @@ export const rateStore = async (
   };
 };
 
+export const removeRating = async (userId: number, storeId: number) => {
+  const store = await prisma.store.findUnique({
+    where: { id: storeId }
+  });
+
+  if (!store) {
+    throw new HttpError(404, 'Store not found');
+  }
+
+  await prisma.rating.deleteMany({
+    where: { userId, storeId }
+  });
+
+  const aggregate = await prisma.rating.aggregate({
+    where: { storeId },
+    _avg: { value: true },
+    _count: { value: true }
+  });
+
+  const count = aggregate._count.value;
+  const overallRating = count > 0 && aggregate._avg.value !== null ? Math.round(aggregate._avg.value * 10) / 10 : null;
+
+  return {
+    overallRating,
+    ratingCount: count,
+    myRating: null,
+    myComment: null
+  };
+};
+
 export const getStoreReviews = async (storeId: number, query: Record<string, unknown>) => {
   const store = await prisma.store.findUnique({
     where: { id: storeId }

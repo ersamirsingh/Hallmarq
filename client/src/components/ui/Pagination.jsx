@@ -10,10 +10,10 @@ export function Pagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className={`flex items-center justify-between gap-4 py-3 ${className}`}>
+    <div className={`flex items-center justify-between gap-4 py-3.5 ${className}`}>
       <p className="text-xs text-slate-500 dark:text-slate-400">
-        Page <span className="font-semibold text-slate-800 dark:text-slate-200">{page}</span> of{' '}
-        <span className="font-semibold text-slate-800 dark:text-slate-200">{totalPages}</span>
+        Page <span className="font-semibold text-slate-900 dark:text-slate-100">{page}</span> of{' '}
+        <span className="font-semibold text-slate-900 dark:text-slate-100">{totalPages}</span>
       </p>
       <div className="flex items-center gap-2">
         <Button

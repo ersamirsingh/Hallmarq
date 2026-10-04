@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, Star } from 'lucide-react';
 import { storesApi } from '../api/stores.api';
 import { Drawer, EmptyState, Pagination, SkeletonRow } from './ui';
 import StarRating from './StarRating';
@@ -16,13 +16,13 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
 
   if (!store) return null;
 
-  const reviews = data?.reviews || [];
-  const pagination = data?.pagination;
+  const reviews = data?.reviews || data?.data || [];
+  const pagination = data?.pagination || data?.meta;
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title={`Reviews: ${store.name}`} width="max-w-lg">
       <div className="space-y-6">
-        <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/50">
+        <div className="rounded-2xl border border-slate-200/90 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-800/40">
           <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Average store rating</span>
           <div className="mt-1 flex items-center gap-3">
             <StarRating value={Number(store.rating?.average) || 0} size="md" />
@@ -36,7 +36,7 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+          <h3 className="text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
             Customer feedback
           </h3>
 
@@ -57,11 +57,11 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
               {reviews.map((rev) => (
                 <div
                   key={rev.id}
-                  className="rounded-xl border border-slate-200 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900"
+                  className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/90"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold text-slate-900 dark:text-white">
-                      {rev.user?.name || 'Anonymous User'}
+                      {rev.user?.name || 'Verified Customer'}
                     </span>
                     <span className="text-[11px] text-slate-400">
                       {new Date(rev.createdAt).toLocaleDateString()}
@@ -69,13 +69,13 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
                   </div>
                   <div className="mt-1.5 flex items-center gap-2">
                     <StarRating value={rev.value} size="sm" />
-                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                    <span className="text-xs font-bold text-amber-500">
                       {rev.value} / 5
                     </span>
                   </div>
                   {rev.comment && (
                     <p className="mt-2.5 text-xs text-slate-600 leading-relaxed dark:text-slate-300">
-                      {rev.comment}
+                      "{rev.comment}"
                     </p>
                   )}
                 </div>
@@ -85,11 +85,13 @@ export default function ReviewsDrawer({ isOpen, onClose, store }) {
         </div>
 
         {pagination && pagination.totalPages > 1 && (
-          <Pagination
-            page={pagination.page}
-            totalPages={pagination.totalPages}
-            onPageChange={(p) => setPage(p)}
-          />
+          <div className="border-t border-slate-100 pt-3 dark:border-slate-800">
+            <Pagination
+              page={pagination.page}
+              totalPages={pagination.totalPages}
+              onPageChange={(p) => setPage(p)}
+            />
+          </div>
         )}
       </div>
     </Drawer>

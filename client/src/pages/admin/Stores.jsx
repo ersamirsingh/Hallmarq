@@ -145,8 +145,8 @@ export default function Stores() {
                     </td>
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-1.5">
-                        <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-                        <span className="font-semibold text-slate-900 dark:text-white">
+                        <Star className="h-4 w-4 fill-rating text-rating" />
+                        <span className="font-bold text-rating">
                           {typeof s.rating === 'object' && s.rating !== null
                             ? s.rating.average ?? '0.0'
                             : s.rating ?? '0.0'}

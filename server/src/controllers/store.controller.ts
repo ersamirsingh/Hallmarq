@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getUserStores, rateStore, getStoreReviews } from '../services/store.service.js';
+import { getUserStores, rateStore, removeRating, getStoreReviews } from '../services/store.service.js';
 
 export const getStores = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -20,6 +20,16 @@ export const putRating = async (req: Request, res: Response, next: NextFunction)
       req.body.value,
       req.body.comment
     );
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteRating = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const storeId = Number(req.params.id);
+    const result = await removeRating(req.user!.id, storeId);
     res.json(result);
   } catch (err) {
     next(err);

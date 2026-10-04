@@ -42,15 +42,17 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-slate-50 dark:bg-slate-950">
-      <div className="absolute right-6 top-6">
+    <div className="relative flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-slate-50 dark:bg-[#090D16] overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-200/20 via-transparent to-transparent dark:from-indigo-900/15 dark:via-transparent pointer-events-none" />
+
+      <div className="absolute right-6 top-6 z-10">
         <ThemeToggle />
       </div>
 
-      <div className="w-full max-w-md">
+      <div className="relative w-full max-w-md">
         <div className="mb-6 text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-md dark:bg-indigo-500">
-            <Award className="h-7 w-7" />
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md dark:bg-white dark:text-slate-950">
+            <Award className="h-6 w-6" />
           </div>
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Create your account
@@ -60,14 +62,14 @@ export default function Signup() {
           </p>
         </div>
 
-        <Card>
+        <Card className="border-slate-200/90 shadow-xl shadow-slate-900/5 dark:border-slate-800 dark:shadow-black/40">
           <CardHeader>
             <CardTitle>Sign up</CardTitle>
             <CardDescription>Fill in your details to get started</CardDescription>
           </CardHeader>
           <CardContent>
             {serverError && (
-              <div className="mb-4 rounded-lg bg-rose-50 p-3 text-xs font-medium text-rose-700 dark:bg-rose-950/50 dark:text-rose-300">
+              <div className="mb-4 rounded-xl bg-rose-50 border border-rose-200 p-3 text-xs font-medium text-rose-700 dark:bg-rose-950/50 dark:border-rose-900/60 dark:text-rose-300">
                 {serverError}
               </div>
             )}
@@ -105,7 +107,7 @@ export default function Signup() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-8 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                  className="absolute right-3.5 top-8.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -118,7 +120,7 @@ export default function Signup() {
                 label="Address"
                 rows={3}
                 maxLength={400}
-                placeholder="Your home or billing address (optional)"
+                placeholder="Your physical location address"
                 error={errors.address?.message}
                 {...register('address')}
               />
@@ -130,7 +132,7 @@ export default function Signup() {
 
             <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
               Already have an account?{' '}
-              <Link to="/login" className="font-semibold text-indigo-600 hover:underline dark:text-indigo-400">
+              <Link to="/login" className="font-semibold text-slate-900 hover:underline dark:text-white">
                 Sign in
               </Link>
             </div>

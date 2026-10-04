@@ -8,7 +8,7 @@ export default function AppShell() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50/60 text-slate-900 dark:bg-[#090D16] dark:text-slate-100 transition-colors duration-150">
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <Sidebar />
       </div>
@@ -16,7 +16,7 @@ export default function AppShell() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-md transition-opacity"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />

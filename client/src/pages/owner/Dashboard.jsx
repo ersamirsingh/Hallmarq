@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Store, Star, Edit3, User, Calendar, MessageSquare } from 'lucide-react';
+import { Store, Star, Edit3, User, Calendar, MessageSquare, CheckCircle, MapPin, Mail } from 'lucide-react';
 import { ownerApi } from '../../api/owner.api';
 import StarRating from '../../components/StarRating';
 import RatingDistribution from '../../components/RatingDistribution';
@@ -34,19 +34,19 @@ export default function OwnerDashboard() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <Skeleton className="h-10 w-64" />
+        <Skeleton className="h-12 w-64 rounded-xl" />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <Skeleton className="h-48 rounded-xl" />
-          <Skeleton className="h-48 rounded-xl" />
+          <Skeleton className="h-48 rounded-2xl" />
+          <Skeleton className="h-48 rounded-2xl" />
         </div>
-        <Skeleton className="h-72 rounded-xl" />
+        <Skeleton className="h-72 rounded-2xl" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-xl border border-rose-200 bg-rose-50 p-6 text-sm text-rose-700 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-300">
+      <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-sm text-rose-700 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-300">
         Failed to load owner dashboard.
       </div>
     );
@@ -96,26 +96,44 @@ export default function OwnerDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              {store.name}
-            </h1>
-            <Badge variant="secondary">{store.category?.name || 'Store'}</Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleOpenRename}
-              className="gap-1.5"
-            >
-              <Edit3 className="h-3.5 w-3.5" />
-              <span>Rename</span>
-            </Button>
+      <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/90 relative overflow-hidden">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm dark:bg-white dark:text-slate-900">
+              <Store className="h-6 w-6" />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  {store.name}
+                </h1>
+                <Badge variant="secondary">{store.category?.name || 'Store'}</Badge>
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                  <CheckCircle className="h-3 w-3" />
+                  Verified Business
+                </span>
+              </div>
+              <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+                <span className="flex items-center gap-1">
+                  <MapPin className="h-3.5 w-3.5 text-slate-400" />
+                  {store.address}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Mail className="h-3.5 w-3.5 text-slate-400" />
+                  {store.email}
+                </span>
+              </div>
+            </div>
           </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            {store.address} • {store.email}
-          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleOpenRename}
+            className="gap-1.5 shrink-0"
+          >
+            <Edit3 className="h-3.5 w-3.5" />
+            <span>Rename store</span>
+          </Button>
         </div>
       </div>
 
@@ -126,14 +144,14 @@ export default function OwnerDashboard() {
             <CardDescription>Overall performance from verified reviews</CardDescription>
           </CardHeader>
           <CardContent className="py-6">
-            <div className="flex items-center gap-4">
-              <span className="text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            <div className="flex items-center gap-5">
+              <span className="text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white tabular-nums">
                 {average}
               </span>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <StarRating value={Number(average)} size="lg" />
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Based on {count} {count === 1 ? 'rating' : 'ratings'}
+                <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                  Based on {count} {count === 1 ? 'verified review' : 'verified reviews'}
                 </p>
               </div>
             </div>
@@ -143,7 +161,7 @@ export default function OwnerDashboard() {
         <Card>
           <CardHeader>
             <CardTitle>Rating distribution</CardTitle>
-            <CardDescription>Breakdown by star score</CardDescription>
+            <CardDescription>Breakdown by star score across all submissions</CardDescription>
           </CardHeader>
           <CardContent>
             <RatingDistribution distribution={distribution} total={count} />
@@ -156,10 +174,10 @@ export default function OwnerDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Customer ratings and reviews</CardTitle>
-              <CardDescription>Ratings and written reviews submitted by customers</CardDescription>
+              <CardDescription>User-by-user ratings and detailed feedback</CardDescription>
             </div>
-            <span className="text-xs text-slate-500 dark:text-slate-400">
-              {count} total
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+              {count} {count === 1 ? 'review' : 'reviews'}
             </span>
           </div>
         </CardHeader>
@@ -177,9 +195,9 @@ export default function OwnerDashboard() {
 
                 return (
                   <div key={r.id || r.email || Math.random()} className="py-4 first:pt-0 last:pb-0">
-                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                      <div className="flex items-center gap-2.5">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400 font-semibold text-xs">
+                    <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100 font-bold text-xs shadow-xs">
                           {userName.charAt(0).toUpperCase()}
                         </div>
                         <div>
@@ -196,7 +214,7 @@ export default function OwnerDashboard() {
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1.5">
                           <StarRating value={r.value} size="sm" />
-                          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                          <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
                             {r.value} / 5
                           </span>
                         </div>
@@ -208,8 +226,8 @@ export default function OwnerDashboard() {
                       </div>
                     </div>
                     {r.comment && (
-                      <div className="mt-2.5 ml-10 rounded-lg bg-slate-50 p-3 text-xs text-slate-700 dark:bg-slate-800/60 dark:text-slate-300 leading-relaxed border border-slate-100 dark:border-slate-800">
-                        {r.comment}
+                      <div className="mt-3 ml-12 rounded-xl bg-slate-50/80 p-3.5 text-xs text-slate-700 dark:bg-slate-800/50 dark:text-slate-300 leading-relaxed border border-slate-100 dark:border-slate-800/80">
+                        "{r.comment}"
                       </div>
                     )}
                   </div>
@@ -241,23 +259,19 @@ export default function OwnerDashboard() {
             required
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            placeholder="Enter store name"
+            placeholder="Enter new business name"
             maxLength={100}
-            helperText="Between 3 and 100 characters"
           />
           <div className="flex justify-end gap-3 pt-2">
             <Button
-              type="button"
               variant="outline"
               onClick={() => setIsRenameOpen(false)}
+              disabled={isRenaming}
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              disabled={isRenaming}
-            >
-              {isRenaming ? 'Saving...' : 'Save changes'}
+            <Button type="submit" loading={isRenaming}>
+              Save changes
             </Button>
           </div>
         </form>

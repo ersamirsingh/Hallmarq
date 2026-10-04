@@ -23,24 +23,24 @@ export function SortableTh({
   return (
     <th
       scope="col"
-      className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 ${className}`}
+      className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ${className}`}
       aria-sort={isActive ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
     >
       <button
         type="button"
         onClick={handleClick}
-        className="group inline-flex items-center gap-1.5 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded dark:hover:text-white"
+        className="group inline-flex items-center gap-1.5 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 rounded dark:hover:text-white cursor-pointer"
       >
         <span>{children}</span>
         <span className="text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200">
           {isActive ? (
             sortOrder === 'asc' ? (
-              <ArrowUp className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+              <ArrowUp className="h-3.5 w-3.5 text-slate-900 dark:text-white" />
             ) : (
-              <ArrowDown className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+              <ArrowDown className="h-3.5 w-3.5 text-slate-900 dark:text-white" />
             )
           ) : (
-            <ArrowUpDown className="h-3.5 w-3.5 opacity-50" />
+            <ArrowUpDown className="h-3.5 w-3.5 opacity-40" />
           )}
         </span>
       </button>

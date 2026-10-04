@@ -32,20 +32,20 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 bg-stock-100 dark:bg-stock-950">
       <div className="absolute right-6 top-6">
         <ThemeToggle />
       </div>
 
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-md dark:bg-indigo-500">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-ink-900 text-white shadow-sm dark:bg-ink-100 dark:text-ink-950">
             <Award className="h-7 w-7" />
           </div>
-          <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink-950 dark:text-white">
             Reset password
           </h1>
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-sm text-stock-500 dark:text-stock-400">
             Request a secure password reset link
           </p>
         </div>

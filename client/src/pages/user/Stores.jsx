@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search, Store as StoreIcon } from 'lucide-react';
+import { Search, Store as StoreIcon, SlidersHorizontal } from 'lucide-react';
 import { storesApi } from '../../api/stores.api';
 import { categoryApi } from '../../api/category.api';
 import useDebounce from '../../hooks/useDebounce';
@@ -43,12 +43,12 @@ export default function Stores() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
           Explore stores
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          Discover local businesses and share your rating experience
+          Discover verified local businesses and share your rating experience
         </p>
       </div>
 
@@ -61,9 +61,9 @@ export default function Stores() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="pl-9"
+            className="pl-9.5"
           />
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
         </div>
         <div className="w-full sm:w-56">
           <Select

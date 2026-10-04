@@ -11,4 +11,5 @@ export const ownerRouter = Router();
 ownerRouter.use(auth, requireRole(Role.OWNER));
 
 ownerRouter.get('/dashboard', getDashboard);
+ownerRouter.get('/store', getDashboard);
 ownerRouter.patch('/store', validate(updateStoreNameSchema), patchStoreName);

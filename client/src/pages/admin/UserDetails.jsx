@@ -15,8 +15,8 @@ export default function UserDetails() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <Skeleton className="h-8 w-48" />
-        <Skeleton className="h-64 rounded-xl" />
+        <Skeleton className="h-8 w-48 rounded-xl" />
+        <Skeleton className="h-64 rounded-2xl" />
       </div>
     );
   }
@@ -30,7 +30,7 @@ export default function UserDetails() {
             <span>Back to users</span>
           </Button>
         </Link>
-        <div className="rounded-xl border border-rose-200 bg-rose-50 p-6 text-sm text-rose-700 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-300">
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-sm text-rose-700 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-300">
           User not found or failed to load user details.
         </div>
       </div>
@@ -39,6 +39,7 @@ export default function UserDetails() {
 
   const { user } = data;
   const isOwner = user.role === 'OWNER' || user.role === 'STORE_OWNER';
+  const storeInfo = user.store || user.ownedStore || (user.storeName ? { name: user.storeName, rating: { average: user.storeRating } } : null);
 
   return (
     <div className="space-y-6">
@@ -99,30 +100,29 @@ export default function UserDetails() {
               <CardDescription>Associated business and customer feedback</CardDescription>
             </CardHeader>
             <CardContent>
-              {user.store ? (
+              {storeInfo ? (
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100">
                       <Store className="h-5 w-5" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-slate-900 dark:text-white">{user.store.name}</h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{user.store.category?.name}</p>
+                      <h4 className="font-semibold text-slate-900 dark:text-white">{storeInfo.name}</h4>
+                      {storeInfo.category?.name && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{storeInfo.category.name}</p>
+                      )}
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
+                  <div className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/40">
                     <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Store rating</span>
                     <div className="mt-1 flex items-center gap-2">
                       <div className="flex items-center text-amber-500">
                         <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
                         <span className="ml-1.5 text-xl font-bold text-slate-900 dark:text-white">
-                          {user.store.rating?.average || '0.0'}
+                          {storeInfo.rating?.average || user.storeRating || '0.0'}
                         </span>
                       </div>
-                      <span className="text-xs text-slate-500 dark:text-slate-400">
-                        ({user.store.rating?.count || 0} reviews)
-                      </span>
                     </div>
                   </div>
                 </div>
